@@ -1,0 +1,12 @@
+Script started on 2026-07-12 05:31:12-05:00 [COMMAND="./toolchain.sh" <not executed on terminal>]
+Installing latest environment status
+remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)        
+From https://github.com/ps2dev/ps2toolchain-dvp
+ * branch            54d25004c9d9d0d10d5f320703a8fe7c6ddb684a -> FETCH_HEAD
+HEAD is now at 54d2500 Merge pull request #30 from fjtrujy/ci/fixNode20Warnings
+Cloning into 'binutils-gdb'...
+fatal: Remote branch 3eb45ea37f0efd498d1de3cf9562de07197aefa8 not found in upstream origin
+../scripts/001-binutils.sh: Failed.
+../scripts/001-dvp.sh: Failed.
+
+Script done on 2026-07-12 05:31:14-05:00 [COMMAND_EXIT_CODE="1"]

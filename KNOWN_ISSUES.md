@@ -28,3 +28,14 @@
 - **Impact:** The documented method does not establish an ARM64-native toolchain or emulator path.
 
 No issue above is a confirmed build failure because Project 001 performed no builds.
+
+## KI-005 — Immutable commit override is incompatible with nested clone command
+
+- **Status:** Confirmed in Project 002; open
+- **Affected:** DVP toolchain nested binutils checkout; potentially other nested checkout scripts with the same pattern
+- **Classification:** Configuration error
+- **Evidence:** With DVP binutils pinned to commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`, the official script ran `git clone -b` and Git reported `Remote branch ... not found in upstream origin`. The complete output is in `logs/project-002-build.log`.
+- **Impact:** The official documented build workflow cannot consume the exact immutable nested commit through its clone path. The build stopped before any ARM64 compilation test.
+- **Upstream base:** `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a` and `ps2dev/binutils-gdb` commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`.
+- **Changed behavior:** None. Upstream source was not modified and no patch was attempted.
+- **Validation status:** Reproduced once on Ubuntu 26.04 ARM64; command exited 1. ARM64 feasibility remains unverified.
