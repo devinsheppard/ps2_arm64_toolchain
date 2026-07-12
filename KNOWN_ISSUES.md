@@ -39,3 +39,14 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Upstream base:** `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a` and `ps2dev/binutils-gdb` commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`.
 - **Changed behavior:** None. Upstream source was not modified and no patch was attempted.
 - **Validation status:** Reproduced once on Ubuntu 26.04 ARM64; command exited 1. ARM64 feasibility remains unverified.
+
+## KI-006 — IOP GCC pin identifies an annotated tag object, not a commit
+
+- **Status:** Confirmed in Project 003; open
+- **Affected:** `validation/project-002-pins.sh`, IOP GCC checkout
+- **Classification:** Reproducibility issue
+- **Evidence:** Fetching object `dcd428f94ffb464418f996ffb70dfa398f5caa3f` and checking out `FETCH_HEAD` produced `git rev-parse HEAD` value `5115c7e447fc07457443df874bf57840e8316d5f`. The equality check exited 1; see `logs/project-003-preclone.log`.
+- **Impact:** The manifest does not yet contain an exact commit for every dependency, so the official build retry cannot begin reproducibly.
+- **Compilation status:** Not begun.
+- **ARM64 relevance:** None apparent; this is Git object-type handling, not host compilation.
+- **Recommended next objective:** Resolve all pins as commit objects, correct every annotated-tag object pin, rerun checkout verification, and only then retry the official build.
