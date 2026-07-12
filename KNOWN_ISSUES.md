@@ -62,3 +62,14 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Progress before failure:** The full DVP toolchain components and IOP binutils/GDB built and installed. IOP GCC configured for an AArch64 host and began stage-1 compilation. EE did not start.
 - **ARM64 relevance:** No ARM64-specific error was observed; the kernel killed a memory-intensive host process.
 - **Recommended next objective:** Establish a reproducible lower-parallelism or higher-memory build environment and retry without source patches.
+
+## KI-008 — Official scripts do not expose a build job-count override
+
+- **Status:** Confirmed in Project 005; open
+- **Affected:** Pinned DVP, IOP, and EE build scripts
+- **Classification:** Configuration limitation
+- **Evidence:** Each compile script assigns `PROC_NR=$(getconf _NPROCESSORS_ONLN)` after sourcing `PS2DEV_CONFIG_OVERRIDE` and passes an explicit `-j "$PROC_NR"`. The official READMEs/configuration expose no alternative. On this host, `getconf` remains 4 even when a command is restricted to one CPU.
+- **Impact:** A documented, otherwise identical one-job retry is unavailable. Repeating the workflow on this host would retain the four-job setting that triggered KI-007.
+- **Swap:** Official documentation provides no swap procedure, and repository rules prohibit modifying system state outside the project. No swap was changed.
+- **ARM64 relevance:** None established; this concerns host resource control rather than generated code or host instruction support.
+- **Recommended next objective:** Authorize and document a minimal patch adding an opt-in job-count override, or use a sufficiently provisioned host without changing upstream behavior.

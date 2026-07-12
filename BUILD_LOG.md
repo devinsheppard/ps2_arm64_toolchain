@@ -147,3 +147,36 @@ EE was not started. The full toolchain did not complete, so final binary/version
 - **ARM64-specific:** No evidence. The failure is resource exhaustion; configuration and substantial ARM64-hosted compilation succeeded beforehand.
 - **Stop condition:** No retry, parallelism change, memory change, patch, or later toolchain step was attempted.
 - **Recommended Project 005 objective:** Define and document a reproducible resource-constrained build setting (lower job count and/or adequate memory/swap), then resume the same normalized official build and stop at its next genuine failure or success.
+
+## 2026-07-12 — Project 005 resource-control investigation
+
+### Official parallelism mechanism
+
+The pinned official DVP, IOP, and EE component scripts were inspected without modification. Every compile script determines its job count internally with:
+
+```text
+PROC_NR=$(getconf _NPROCESSORS_ONLN)
+```
+
+and then invokes Make or CMake with an explicit `-j "$PROC_NR"`. In the failed IOP GCC stage-1 script, these are lines 55-56 and 100 of `scripts/002-gcc-stage1.sh` at upstream commit `8129f3ab5f6beb63e0ec1ed3627ef9b985750729`:
+
+```text
+PROC_NR=$(getconf _NPROCESSORS_ONLN)
+make --quiet -j "$PROC_NR" all
+```
+
+The scripts source `PS2DEV_CONFIG_OVERRIDE` before assigning `PROC_NR`, so the supported override cannot set or preserve a job count. The official READMEs and configuration files expose no parallelism setting. An external `MAKEFLAGS=-j1` would be superseded by the explicit command-line `-j 4` and therefore is not the official mechanism used by these scripts.
+
+### Affinity and swap findings
+
+The host reports 4 from `getconf _NPROCESSORS_ONLN`. Restricting a read-only test command to one CPU with `taskset` changed `nproc` from 4 to 1 but left `getconf _NPROCESSORS_ONLN` at 4. CPU affinity therefore does not reduce the job count selected by this workflow.
+
+The official upstream documentation reviewed by this project contains no swap sizing or swap-creation procedure. Creating or changing system swap would modify state outside this repository, which AGENTS.md prohibits. No swap change was requested or performed.
+
+### Result and stop condition
+
+- **Build action:** No build was rerun. With no supported one-job input, an otherwise identical retry would again select four jobs on the same memory-constrained host and would not satisfy Project 005's resource-control requirement.
+- **Source action:** No upstream source, compiler logic, optimization flag, or generated tree was changed. No patch was created.
+- **ARM64 finding:** Unchanged. Project 004 demonstrated substantial native ARM64 compilation and exposed only a confirmed OOM kill; Project 005 produced no new ARM64-specific failure.
+- **Classification:** Configuration limitation in the official workflow: job count is hard-coded from online processor count and is not externally configurable through its documented override.
+- **Recommended Project 006 objective:** Explicitly choose one of two reproducible paths: authorize a minimal repository-maintained patch that adds a job-count override to each upstream script while preserving the default behavior, or run the unchanged pinned workflow on a host with enough memory for its mandatory four-job build. Validate the chosen resource control before resuming the build.
