@@ -1,0 +1,18 @@
+Script started on 2026-07-12 09:26:46-05:00 [COMMAND="bash scripts/project-006-apply-patches.sh" <not executed on terminal>]
++++ dirname scripts/project-006-apply-patches.sh
+++ cd scripts/..
+++ pwd
++ ROOT=/home/devin/ps2_arm64_toolchain
++ apply_patch /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a /home/devin/ps2_arm64_toolchain/patches/ps2toolchain-dvp-ps2dev-jobs.patch
++ local repository=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp
++ local commit=54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
++ local patch=/home/devin/ps2_arm64_toolchain/patches/ps2toolchain-dvp-ps2dev-jobs.patch
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp rev-parse HEAD
++ test 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a = 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp status --short
++ test -z ''
++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp apply --check /home/devin/ps2_arm64_toolchain/patches/ps2toolchain-dvp-ps2dev-jobs.patch
+error: patch failed: scripts/001-binutils.sh:51
+error: scripts/001-binutils.sh: patch does not apply
+
+Script done on 2026-07-12 09:26:46-05:00 [COMMAND_EXIT_CODE="1"]

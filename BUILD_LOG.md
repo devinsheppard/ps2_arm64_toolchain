@@ -180,3 +180,30 @@ The official upstream documentation reviewed by this project contains no swap si
 - **ARM64 finding:** Unchanged. Project 004 demonstrated substantial native ARM64 compilation and exposed only a confirmed OOM kill; Project 005 produced no new ARM64-specific failure.
 - **Classification:** Configuration limitation in the official workflow: job count is hard-coded from online processor count and is not externally configurable through its documented override.
 - **Recommended Project 006 objective:** Explicitly choose one of two reproducible paths: authorize a minimal repository-maintained patch that adds a job-count override to each upstream script while preserving the default behavior, or run the unchanged pinned workflow on a host with enough memory for its mandatory four-job build. Validate the chosen resource control before resuming the build.
+
+## 2026-07-12 — Project 006 configurable parallelism patch attempt
+
+### Scope and patch design
+
+Inspection identified 11 direct parallelism assignments, not a shared function: DVP `scripts/001-binutils.sh`, `002-masp.sh`, and `003-openvcl.sh`; IOP `scripts/001-binutils.sh` and `002-gcc-stage1.sh`; and EE `scripts/001-binutils.sh` through `006-gcc-stage2.sh` where applicable. Each uses `PROC_NR=$(getconf _NPROCESSORS_ONLN)` and later supplies that value to `-j`.
+
+Three repository-maintained patches were created for the exact component bases recorded in their headers. Their intended one-line behavior change was:
+
+```text
+PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+```
+
+This expression preserves the upstream `getconf` command when `PS2DEV_JOBS` is unset and selects the explicit value when it is set. No compiler source, build target, or optimization flag was included in the patches.
+
+### First genuine failure
+
+- **Component:** Patch application to `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a`.
+- **Command:** `git -C build/ps2toolchain/build/ps2toolchain-dvp apply --check patches/ps2toolchain-dvp-ps2dev-jobs.patch` (absolute paths appear in the transcript).
+- **Exact error:** `error: patch failed: scripts/001-binutils.sh:51` followed by `error: scripts/001-binutils.sh: patch does not apply`.
+- **Cause:** The patch hunk's trailing context expected `for TARGET_ALIAS in "dvp"; do`, while the pinned upstream file uses `for TARGET in "dvp"; do` at line 57. The intended changed assignment itself is at line 54.
+- **Changed behavior:** None. `git apply --check` failed before application; all three upstream component worktrees remained clean.
+- **Validation status:** Failed for the first DVP hunk. IOP and EE patch application, default/override behavior validation, and the toolchain build were not attempted because AGENTS.md requires stopping at the first genuine failure.
+- **OOM/ARM64 status:** No build ran, so no OOM event or ARM64-specific issue occurred in Project 006.
+- **Recommended Project 007 objective:** Regenerate the minimal DVP, IOP, and EE patches directly against their exact pinned file contents, validate every patch with `git apply --check`, then verify unset and `PS2DEV_JOBS=1` job selection before resuming the resource-controlled build.
+
+The complete failed application transcript is preserved in `logs/project-006-patch-apply.log`.

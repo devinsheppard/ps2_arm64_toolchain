@@ -73,3 +73,15 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Swap:** Official documentation provides no swap procedure, and repository rules prohibit modifying system state outside the project. No swap was changed.
 - **ARM64 relevance:** None established; this concerns host resource control rather than generated code or host instruction support.
 - **Recommended next objective:** Authorize and document a minimal patch adding an opt-in job-count override, or use a sufficiently provisioned host without changing upstream behavior.
+
+## KI-009 — Initial configurable-parallelism patch has mismatched DVP context
+
+- **Status:** Confirmed in Project 006; open
+- **Affected:** `patches/ps2toolchain-dvp-ps2dev-jobs.patch`, first hunk for DVP `scripts/001-binutils.sh`
+- **Classification:** Patch configuration error
+- **Upstream base:** `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a`
+- **Evidence:** `git apply --check` reported `patch failed: scripts/001-binutils.sh:51`. The hunk expected `for TARGET_ALIAS in "dvp"; do`; the pinned file contains `for TARGET in "dvp"; do`.
+- **Changed behavior:** None; the check failed before application and all upstream worktrees stayed clean.
+- **Validation:** DVP failed at the first hunk. IOP and EE patches and both job-count modes remain unvalidated because work stopped immediately.
+- **ARM64 relevance:** None; no build was run.
+- **Recommended next objective:** Regenerate all three patches from their exact pinned sources and validate application before testing behavior.
