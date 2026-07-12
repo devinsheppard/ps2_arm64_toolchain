@@ -5,13 +5,16 @@ set -x
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 TOOLCHAIN_BUILD="$ROOT/build/ps2toolchain/build"
+source "$ROOT/validation/project-002-pins.sh"
 
 prepare_checkout()
 {
-  local directory=$1
-  local url=$2
-  local commit=$3
+  local name=$1
+  local directory=$2
+  local url=$3
+  local commit=$4
   local actual
+  local type
 
   mkdir -p "$directory"
   if test ! -d "$directory/.git"; then
@@ -21,38 +24,49 @@ prepare_checkout()
     git -C "$directory" remote set-url origin "$url"
   fi
   git -C "$directory" fetch origin "$commit" --depth=1
-  git -C "$directory" checkout --detach -f FETCH_HEAD
+  type=$(git -C "$directory" cat-file -t FETCH_HEAD) || {
+    printf 'ERROR: %s object %s could not be resolved in %s\n' "$name" "$commit" "$url" >&2
+    exit 1
+  }
+  if test "$type" != commit; then
+    printf 'ERROR: %s object %s in %s has type %s, expected commit\n' "$name" "$commit" "$url" "$type" >&2
+    exit 1
+  fi
+  git -C "$directory" checkout --detach -f "$commit"
   actual=$(git -C "$directory" rev-parse HEAD)
-  test "$actual" = "$commit"
-  printf '%s %s\n' "$directory" "$actual"
+  if test "$actual" != "$commit"; then
+    printf 'ERROR: %s checkout HEAD %s does not match commit %s\n' "$name" "$actual" "$commit" >&2
+    exit 1
+  fi
+  printf '%s %s %s\n' "$name" "$directory" "$actual"
 }
 
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/binutils-gdb" \
+prepare_checkout dvp-binutils "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/binutils-gdb" \
   https://github.com/ps2dev/binutils-gdb.git \
-  3eb45ea37f0efd498d1de3cf9562de07197aefa8
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/masp" \
+  "$PS2TOOLCHAIN_DVP_BINUTILS_DEFAULT_REPO_REF"
+prepare_checkout dvp-masp "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/masp" \
   https://github.com/ps2dev/masp.git \
-  ddb4fa5fb1546e74662979a4e417217c27201c3f
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/openvcl" \
+  "$PS2TOOLCHAIN_DVP_MASP_DEFAULT_REPO_REF"
+prepare_checkout dvp-openvcl "$TOOLCHAIN_BUILD/ps2toolchain-dvp/build/openvcl" \
   https://github.com/ps2dev/openvcl.git \
-  5d432985669f9ed2ecde7058a8d2faeb0396b2d4
+  "$PS2TOOLCHAIN_DVP_OPENVCL_DEFAULT_REPO_REF"
 
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-iop/build/binutils-gdb" \
+prepare_checkout iop-binutils "$TOOLCHAIN_BUILD/ps2toolchain-iop/build/binutils-gdb" \
   https://sourceware.org/git/binutils-gdb.git \
-  48324fde1e284293dd3d570dba597cb644921c92
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-iop/build/gcc" \
+  "$PS2TOOLCHAIN_IOP_BINUTILS_DEFAULT_REPO_REF"
+prepare_checkout iop-gcc "$TOOLCHAIN_BUILD/ps2toolchain-iop/build/gcc" \
   https://gcc.gnu.org/git/gcc.git \
-  dcd428f94ffb464418f996ffb70dfa398f5caa3f
+  "$PS2TOOLCHAIN_IOP_GCC_DEFAULT_REPO_REF"
 
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/binutils-gdb" \
+prepare_checkout ee-binutils "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/binutils-gdb" \
   https://github.com/ps2dev/binutils-gdb.git \
-  616e51fa6ed9d1e8f4bda7d0087fac30c5398aa9
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/gcc" \
+  "$PS2TOOLCHAIN_EE_BINUTILS_DEFAULT_REPO_REF"
+prepare_checkout ee-gcc "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/gcc" \
   https://github.com/ps2dev/gcc.git \
-  df77d03bc1bd5765b40de554918a5ff541202548
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/newlib" \
+  "$PS2TOOLCHAIN_EE_GCC_DEFAULT_REPO_REF"
+prepare_checkout ee-newlib "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/newlib" \
   https://github.com/ps2dev/newlib.git \
-  58fb6406408a541e0c826f47487315b485d4db56
-prepare_checkout "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/pthread-embedded" \
+  "$PS2TOOLCHAIN_EE_NEWLIB_DEFAULT_REPO_REF"
+prepare_checkout ee-pthread "$TOOLCHAIN_BUILD/ps2toolchain-ee/build/pthread-embedded" \
   https://github.com/ps2dev/pthread-embedded.git \
-  b1746fd2b52d5aeafc1173761eb50e0958e8994b
+  "$PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_DEFAULT_REPO_REF"

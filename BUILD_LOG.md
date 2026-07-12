@@ -100,3 +100,50 @@ The following checkouts passed exact `HEAD` verification:
 - **ARM64-specific:** No. Git annotated-tag peeling is host-architecture independent.
 - **Stop condition:** Work stopped immediately; the pin was not corrected and no further checkout or build command was attempted.
 - **Recommended Project 004 objective:** Resolve every stored upstream object to a commit (`^{commit}` semantics), replace any tag-object pins with commit SHAs, validate all expected checkouts, then retry the unchanged official toolchain build.
+
+## 2026-07-12 — Project 004 normalized pins and native build
+
+### Pin normalization and validation
+
+All 12 upstream objects were fetched from their official repositories and inspected with `git cat-file -t`; each was recursively resolved with `git rev-parse --verify 'FETCH_HEAD^{commit}'`. Eleven stored objects were already commits. The IOP GCC annotated tag object `dcd428f94ffb464418f996ffb70dfa398f5caa3f` resolved to commit `5115c7e447fc07457443df874bf57840e8316d5f`, which replaced the tag object in the manifest.
+
+The complete object audit is preserved in `logs/project-004-pin-audit.log`. The normalized preclone run is preserved in `logs/project-004-preclone.log`; it exited 0 after all nine nested repositories were detached and verified at these commits:
+
+- DVP binutils: `3eb45ea37f0efd498d1de3cf9562de07197aefa8`
+- DVP masp: `ddb4fa5fb1546e74662979a4e417217c27201c3f`
+- DVP openvcl: `5d432985669f9ed2ecde7058a8d2faeb0396b2d4`
+- IOP binutils: `48324fde1e284293dd3d570dba597cb644921c92`
+- IOP GCC: `5115c7e447fc07457443df874bf57840e8316d5f`
+- EE binutils: `616e51fa6ed9d1e8f4bda7d0087fac30c5398aa9`
+- EE GCC: `df77d03bc1bd5765b40de554918a5ff541202548`
+- EE newlib: `58fb6406408a541e0c826f47487315b485d4db56`
+- EE pthread-embedded: `b1746fd2b52d5aeafc1173761eb50e0958e8994b`
+
+The component commits remained DVP `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a`, IOP `8129f3ab5f6beb63e0ec1ed3627ef9b985750729`, and EE `480a5f31c644107ceddcdadf6ee5502fb2cd14ff`. Upstream source was not modified and no architecture patch was added.
+
+### Official build progress
+
+The official top-level `./toolchain.sh` was run with the normalized override, `PS2DEV=/home/devin/ps2_arm64_toolchain/build/ps2dev`, and the corresponding repository-local `PS2SDK`. Its complete transcript is `logs/project-004-build.log`.
+
+Before failure, the ARM64 host successfully:
+
+- configured, compiled, and installed DVP binutils;
+- configured, compiled, and installed DVP masp and openVCL;
+- configured, compiled, and installed IOP binutils, assembler, linker, and GDB;
+- configured IOP GCC 15.2.0 as an `aarch64-unknown-linux-gnu` to `mipsel-none-elf` cross-compiler;
+- began compiling IOP GCC stage 1 and generated multiple MIPS backend decision tables.
+
+EE was not started. The full toolchain did not complete, so final binary/version validation was not performed.
+
+### First genuine failure
+
+- **Component:** IOP GCC 15.2.0, stage 1, GCC machine-description automaton generation (`s-automata`).
+- **Upstream command:** `make --quiet -j "$PROC_NR" all`, with `PROC_NR=$(getconf _NPROCESSORS_ONLN)` resolving to 4.
+- **Exact failed recipe command:** `build/genautomata ../../gcc/common.md ../../gcc/config/mips/mips.md insn-conditions.md > tmp-automata.cc`.
+- **Exact fatal output:** `/bin/bash: line 2: 200237 Killed ...`; `make[2]: *** [Makefile:2786: s-automata] Error 137`, followed by `all-gcc`, stage, and component failures. The top-level transcript ended with `COMMAND_EXIT_CODE="1"`.
+- **OOM determination:** Confirmed. The kernel journal reports a global OOM event at 07:15:05, identifies `genautomata` PID 200237, and records `Out of memory: Killed process 200237 (genautomata)` with approximately 1.61 GiB anonymous RSS. At post-failure inspection the 3.7 GiB host also had essentially all of its 1.0 GiB swap consumed.
+- **Classification:** Configuration error: automatic four-way parallelism exceeded the host's available memory. The process was killed by the kernel rather than failing with a compiler diagnostic.
+- **Compilation begun:** Yes. DVP and IOP binutils completed, and IOP GCC stage 1 was actively compiling/generating backend sources.
+- **ARM64-specific:** No evidence. The failure is resource exhaustion; configuration and substantial ARM64-hosted compilation succeeded beforehand.
+- **Stop condition:** No retry, parallelism change, memory change, patch, or later toolchain step was attempted.
+- **Recommended Project 005 objective:** Define and document a reproducible resource-constrained build setting (lower job count and/or adequate memory/swap), then resume the same normalized official build and stop at its next genuine failure or success.

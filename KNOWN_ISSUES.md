@@ -31,7 +31,7 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 
 ## KI-005 — Immutable commit override is incompatible with nested clone command
 
-- **Status:** Confirmed in Project 002; open
+- **Status:** Resolved in Project 004 by repository-local prepopulation
 - **Affected:** DVP toolchain nested binutils checkout; potentially other nested checkout scripts with the same pattern
 - **Classification:** Configuration error
 - **Evidence:** With DVP binutils pinned to commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`, the official script ran `git clone -b` and Git reported `Remote branch ... not found in upstream origin`. The complete output is in `logs/project-002-build.log`.
@@ -42,7 +42,7 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 
 ## KI-006 — IOP GCC pin identifies an annotated tag object, not a commit
 
-- **Status:** Confirmed in Project 003; open
+- **Status:** Resolved in Project 004
 - **Affected:** `validation/project-002-pins.sh`, IOP GCC checkout
 - **Classification:** Reproducibility issue
 - **Evidence:** Fetching object `dcd428f94ffb464418f996ffb70dfa398f5caa3f` and checking out `FETCH_HEAD` produced `git rev-parse HEAD` value `5115c7e447fc07457443df874bf57840e8316d5f`. The equality check exited 1; see `logs/project-003-preclone.log`.
@@ -50,3 +50,15 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Compilation status:** Not begun.
 - **ARM64 relevance:** None apparent; this is Git object-type handling, not host compilation.
 - **Recommended next objective:** Resolve all pins as commit objects, correct every annotated-tag object pin, rerun checkout verification, and only then retry the official build.
+
+## KI-007 — IOP GCC stage 1 exceeds available memory at automatic parallelism
+
+- **Status:** Confirmed in Project 004; open
+- **Affected:** IOP GCC 15.2.0 stage 1, `s-automata` / `genautomata`
+- **Classification:** Configuration error (host resource exhaustion)
+- **Exact command:** `build/genautomata ../../gcc/common.md ../../gcc/config/mips/mips.md insn-conditions.md > tmp-automata.cc`, launched under upstream `make --quiet -j 4 all`
+- **Exact error:** PID 200237 was killed; Make reported `Makefile:2786: s-automata` error 137 and propagated failure through `all-gcc`, `002-gcc-stage1.sh`, and `002-iop.sh`.
+- **OOM evidence:** The kernel journal explicitly records a global OOM kill of `genautomata` with about 1.61 GiB anonymous RSS. The host has 3.7 GiB RAM and 1.0 GiB swap, which was effectively exhausted.
+- **Progress before failure:** The full DVP toolchain components and IOP binutils/GDB built and installed. IOP GCC configured for an AArch64 host and began stage-1 compilation. EE did not start.
+- **ARM64 relevance:** No ARM64-specific error was observed; the kernel killed a memory-intensive host process.
+- **Recommended next objective:** Establish a reproducible lower-parallelism or higher-memory build environment and retry without source patches.
