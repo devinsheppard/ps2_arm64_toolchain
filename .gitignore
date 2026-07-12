@@ -1,0 +1,12 @@
+# Generated build output
+build/
+
+# Runtime logs; curated records may be force-added deliberately
+logs/*
+!logs/.gitkeep
+
+# Editor and operating-system files
+.DS_Store
+*.swp
+*.swo
+*~
