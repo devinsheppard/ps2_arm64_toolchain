@@ -1,11 +1,15 @@
 # Known Issues
 
+This file records both historical failures and current Version 1.0
+limitations. Resolved entries remain for reproducibility and troubleshooting.
+
 ## KI-001 — ARM64 host support is undocumented
 
 - **Status:** Open
 - **Affected:** ps2toolchain, ps2sdk, gsKit, Tyra
 - **Evidence:** The reviewed official repository documentation does not name ARM64/AArch64 as a supported host.
-- **Impact:** A native ARM64 build cannot be claimed supported without validation.
+- **Impact:** Official ARM64 support cannot be claimed. This repository has
+  independently validated one native ARM64 environment.
 
 ## KI-002 — Toolchain host portability is unverified
 
@@ -29,7 +33,9 @@
 - **Evidence:** Official installation instructions specify Docker, PowerShell, VS Code, a prebuilt `h4570/tyra` image, and PCSX2.
 - **Impact:** The documented method does not establish an ARM64-native toolchain or emulator path.
 
-No issue above is a confirmed build failure because Project 001 performed no builds.
+KI-001 through KI-004 originated in the Project 001 research milestone. Later
+projects resolved toolchain feasibility but did not change upstream support
+statements or validate downstream projects.
 
 ## KI-005 — Immutable commit override is incompatible with nested clone command
 
@@ -37,10 +43,12 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Affected:** DVP toolchain nested binutils checkout; potentially other nested checkout scripts with the same pattern
 - **Classification:** Configuration error
 - **Evidence:** With DVP binutils pinned to commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`, the official script ran `git clone -b` and Git reported `Remote branch ... not found in upstream origin`. The complete output is in `logs/project-002-build.log`.
-- **Impact:** The official documented build workflow cannot consume the exact immutable nested commit through its clone path. The build stopped before any ARM64 compilation test.
+- **Historical impact:** The official documented clone path could not consume
+  the exact immutable nested commit. The build stopped before ARM64 compilation.
 - **Upstream base:** `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a` and `ps2dev/binutils-gdb` commit `3eb45ea37f0efd498d1de3cf9562de07197aefa8`.
 - **Changed behavior:** None. Upstream source was not modified and no patch was attempted.
-- **Validation status:** Reproduced once on Ubuntu 26.04 ARM64; command exited 1. ARM64 feasibility remains unverified.
+- **Validation status:** Reproduced once in Project 002; resolved by the pinned
+  preclone workflow before native ARM64 feasibility was later established.
 
 ## KI-006 — IOP GCC pin identifies an annotated tag object, not a commit
 
@@ -48,10 +56,13 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Affected:** `validation/project-002-pins.sh`, IOP GCC checkout
 - **Classification:** Reproducibility issue
 - **Evidence:** Fetching object `dcd428f94ffb464418f996ffb70dfa398f5caa3f` and checking out `FETCH_HEAD` produced `git rev-parse HEAD` value `5115c7e447fc07457443df874bf57840e8316d5f`. The equality check exited 1; see `logs/project-003-preclone.log`.
-- **Impact:** The manifest does not yet contain an exact commit for every dependency, so the official build retry cannot begin reproducibly.
+- **Historical impact:** The manifest did not contain an exact commit for every
+  dependency, so the official build retry could not begin reproducibly.
 - **Compilation status:** Not begun.
 - **ARM64 relevance:** None apparent; this is Git object-type handling, not host compilation.
-- **Recommended next objective:** Resolve all pins as commit objects, correct every annotated-tag object pin, rerun checkout verification, and only then retry the official build.
+- **Resolution:** Project 004 replaced the annotated tag object with commit
+  `5115c7e447fc07457443df874bf57840e8316d5f` and validates every object as a
+  commit before checkout.
 
 ## KI-007 — IOP GCC stage 1 exceeds available memory at automatic parallelism
 
@@ -73,7 +84,9 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Affected:** Pinned DVP, IOP, and EE build scripts
 - **Classification:** Configuration limitation
 - **Evidence:** Each compile script assigns `PROC_NR=$(getconf _NPROCESSORS_ONLN)` after sourcing `PS2DEV_CONFIG_OVERRIDE` and passes an explicit `-j "$PROC_NR"`. The official READMEs/configuration expose no alternative. On this host, `getconf` remains 4 even when a command is restricted to one CPU.
-- **Impact:** A documented, otherwise identical one-job retry is unavailable. Repeating the workflow on this host would retain the four-job setting that triggered KI-007.
+- **Historical impact:** A documented, otherwise identical one-job retry was
+  unavailable. Repeating the workflow retained the four-job setting that
+  triggered KI-007.
 - **Swap:** Official documentation provides no swap procedure, and repository rules prohibit modifying system state outside the project. No swap was changed.
 - **ARM64 relevance:** None established; this concerns host resource control rather than generated code or host instruction support.
 - **Resolution:** Exact-source patches under `patches/project-007/` add an
@@ -83,7 +96,8 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 ## KI-009 — Initial configurable-parallelism patch has mismatched DVP context
 
 - **Status:** Resolved in Project 007
-- **Affected:** `patches/ps2toolchain-dvp-ps2dev-jobs.patch`, first hunk for DVP `scripts/001-binutils.sh`
+- **Affected:** The removed legacy Project 006 DVP patch, first hunk for DVP
+  `scripts/001-binutils.sh`
 - **Classification:** Patch configuration error
 - **Upstream base:** `ps2dev/ps2toolchain-dvp` commit `54d25004c9d9d0d10d5f320703a8fe7c6ddb684a`
 - **Evidence:** `git apply --check` reported `patch failed: scripts/001-binutils.sh:51`. The hunk expected `for TARGET_ALIAS in "dvp"; do`; the pinned file contains `for TARGET in "dvp"; do`.
@@ -92,7 +106,8 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **ARM64 relevance:** None; no build was run.
 - **Resolution:** Replacement patches were generated from exact detached pinned
   worktrees. DVP, IOP, and EE all passed `git apply --check`, behavior
-  validation, and the complete one-job build.
+  validation, and the complete one-job build. The invalid legacy patches and
+  unused helper were removed during Version 1.0 preparation; their log remains.
 
 ## KI-010 — Successful build emits nonfatal libatomic and cleanup diagnostics
 
@@ -144,3 +159,15 @@ No issue above is a confirmed build failure because Project 001 performed no bui
 - **Resolution:** The verifier now accepts either native AArch64 ELF tools or
   executable host-independent shell helpers. The final verification reported
   zero failures and warnings; no installed toolchain file changed.
+
+## KI-014 — Project 008 preparer initially lacked its executable file mode
+
+- **Status:** Resolved in Project 009
+- **Evidence:** Release interface validation returned `Permission denied` when
+  `scripts/project-008-prepare.sh` attempted to invoke
+  `scripts/project-003-preclone.sh`; the latter was tracked as mode `100644`.
+- **Resolution:** The preparer dependency is now tracked as executable. Bash
+  syntax, help, and invalid-argument validation passed afterward. The final
+  installation verifier reported zero failures and warnings.
+- **Impact:** This was a repository packaging issue only. No compiler source,
+  installed toolchain file, or successful Project 007 build result changed.

@@ -2,6 +2,20 @@
 
 set -uo pipefail
 
+usage() {
+  echo "Usage: ${0##*/}"
+  echo 'Read-only verification of the pinned native ARM64 installation.'
+}
+
+if test "${1:-}" = -h || test "${1:-}" = --help; then
+  usage
+  exit 0
+fi
+if test "$#" -ne 0; then
+  usage >&2
+  exit 2
+fi
+
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 source "$ROOT/validation/project-002-pins.sh"
 
@@ -64,7 +78,7 @@ fi
 
 echo '== Ubuntu packages =='
 packages=(
-  gcc make patch git wget texinfo flex bison libgsl-dev libgmp-dev
+  gcc g++ make patch git wget texinfo flex bison libgsl-dev libgmp-dev
   libmpfr-dev libmpc-dev gettext cmake file time bsdutils
 )
 for package in "${packages[@]}"; do
@@ -119,6 +133,7 @@ check_repo() {
   local name=$1
   local directory=$2
   local expected=$3
+  local actual
   if test ! -e "$directory/.git"; then
     fail "$name repository is missing at $directory"
     return
@@ -190,24 +205,24 @@ while IFS= read -r relative; do
 done < "$ROOT/validation/project-008-expected-executables.txt"
 
 echo '== Version execution =='
-version_commands=(
-  "$install_root/bin/masp --version"
-  "$install_root/bin/openvcl --version"
-  "$install_root/dvp/bin/dvp-as --version"
-  "$install_root/iop/bin/mipsel-none-elf-as --version"
-  "$install_root/iop/bin/mipsel-none-elf-ld --version"
-  "$install_root/iop/bin/mipsel-none-elf-gcc --version"
-  "$install_root/iop/bin/mipsel-none-elf-g++ --version"
-  "$install_root/ee/bin/mips64r5900el-ps2-elf-as --version"
-  "$install_root/ee/bin/mips64r5900el-ps2-elf-ld --version"
-  "$install_root/ee/bin/mips64r5900el-ps2-elf-gcc --version"
-  "$install_root/ee/bin/mips64r5900el-ps2-elf-g++ --version"
+version_executables=(
+  "$install_root/bin/masp"
+  "$install_root/bin/openvcl"
+  "$install_root/dvp/bin/dvp-as"
+  "$install_root/iop/bin/mipsel-none-elf-as"
+  "$install_root/iop/bin/mipsel-none-elf-ld"
+  "$install_root/iop/bin/mipsel-none-elf-gcc"
+  "$install_root/iop/bin/mipsel-none-elf-g++"
+  "$install_root/ee/bin/mips64r5900el-ps2-elf-as"
+  "$install_root/ee/bin/mips64r5900el-ps2-elf-ld"
+  "$install_root/ee/bin/mips64r5900el-ps2-elf-gcc"
+  "$install_root/ee/bin/mips64r5900el-ps2-elf-g++"
 )
-for command in "${version_commands[@]}"; do
-  if bash -c "$command"; then
-    pass "$command"
+for executable in "${version_executables[@]}"; do
+  if "$executable" --version; then
+    pass "$executable --version"
   else
-    fail "$command"
+    fail "$executable --version"
   fi
 done
 

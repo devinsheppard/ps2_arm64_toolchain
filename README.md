@@ -1,10 +1,21 @@
 # PS2 ARM64 Toolchain
 
+**Release:** Version 1.0.0
+
 This repository provides a reproducible procedure for building the official
 PlayStation 2 DVP, IOP, and EE cross-toolchains natively on ARM64 Ubuntu. All
 official upstream repositories are pinned to immutable commits. The only
 upstream-source changes are explicit, validated patches that add a configurable
 build job count while preserving the official default behavior.
+
+## Why this repository exists
+
+Official PS2DEV documentation does not identify ARM64 as a supported native
+host, and the official scripts choose build parallelism from the online CPU
+count. On a 4 GiB Raspberry Pi, that default launched four memory-intensive
+GCC jobs and triggered the kernel OOM killer. This project preserves the full
+investigation and provides exact pins, explicit resource-control patches,
+repeatable build helpers, and read-only installation verification.
 
 ## Verified platform
 
@@ -35,7 +46,7 @@ Install the packages used by the successful Ubuntu build:
 ```bash
 sudo apt-get update
 sudo apt-get install -y \
-  gcc make patch git wget texinfo flex bison \
+  gcc g++ make patch git wget texinfo flex bison \
   libgsl-dev libgmp-dev libmpfr-dev libmpc-dev gettext \
   cmake file time bsdutils
 ```
@@ -54,6 +65,7 @@ paths:
 ```bash
 git clone https://github.com/devinsheppard/ps2_arm64_toolchain.git
 cd ps2_arm64_toolchain
+git checkout v1.0.0
 
 export PS2DEV="$PWD/build/ps2dev"
 export PS2SDK="$PS2DEV/ps2sdk"
@@ -66,6 +78,25 @@ export PATH="$PS2DEV/bin:$PS2DEV/dvp/bin:$PS2DEV/iop/bin:$PS2DEV/ee/bin:$PATH"
 positive integer may be selected on a better-provisioned host. When the
 variable is unset or empty, the patches preserve the official upstream
 behavior and use `getconf _NPROCESSORS_ONLN`.
+
+## Repository structure
+
+```text
+README.md                         public installation and usage guide
+RELEASE_NOTES_v1.0.md            Version 1.0 engineering summary
+BUILD_LOG.md                     chronological milestone evidence
+KNOWN_ISSUES.md                  resolved issues and open limitations
+CHANGELOG.md                     release-level changes
+docs/upstream-sources.md         official upstream source inventory
+patches/project-007/             validated job-count patches and patch notes
+scripts/project-008-prepare.sh   exact source and patch preparation
+scripts/project-008-build.sh     DVP → IOP → EE build wrapper
+scripts/project-008-verify-installation.sh
+                                  read-only finished-install verification
+validation/                      immutable pins, host facts, executable manifest
+logs/                            curated milestone transcripts
+build/                           ignored, reproducible sources and installation
+```
 
 All installation and build output stays below `build/`:
 
@@ -171,6 +202,45 @@ the script remains useful on other ARM64 machines.
   appeared in the successful build. `libatomic.a` installed, final cleanup
   completed, and the overall command returned 0. They remain documented in
   `KNOWN_ISSUES.md`.
+
+## Frequently asked questions
+
+### Is ARM64 officially supported by PS2DEV?
+
+No official support statement was found. Version 1.0 demonstrates a successful
+native build on the verified platform; it does not change upstream support
+policy.
+
+### Does this repository contain prebuilt toolchain binaries?
+
+No. Generated build trees and installed binaries are ignored. The repository
+contains exact pins, patches, scripts, documentation, and evidence needed to
+reproduce them.
+
+### Why is `PS2DEV_JOBS=1` recommended?
+
+Four jobs exhausted the verified host's 3.7 GiB usable RAM plus configured
+swap. One job completed the full toolchain with a measured peak RSS of about
+2.0 GiB. Better-provisioned hosts may use a larger positive integer, but that
+has not been validated by this release.
+
+### Is 1 GiB swap mandatory?
+
+It is the verified configuration, not a universal minimum. Low-memory hosts
+should have approximately 1 GiB configured and use one job. The verifier warns
+when resources are below the tested profile; it never changes swap.
+
+### Does Version 1.0 build PS2SDK, gsKit, or Tyra?
+
+No. Version 1.0 ends after the native DVP, IOP, and EE toolchain. PS2SDK sample
+validation and downstream projects are future work.
+
+### Can I run the official top-level toolchain wrapper directly?
+
+Not after applying the repository patches. It forcibly checks out component
+repositories and removes those explicit changes. Use the documented local
+build wrapper, which invokes the official component workflows in the same
+order.
 
 ## Remaining limitations
 

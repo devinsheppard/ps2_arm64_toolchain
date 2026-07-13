@@ -2,7 +2,7 @@
 
 All notable project changes will be recorded here.
 
-## Unreleased
+## 1.0.0 - 2026-07-12
 
 ### Added
 
@@ -35,3 +35,20 @@ All notable project changes will be recorded here.
   path, executable-format, and version checks without rebuilding.
 - Added the approved Project 007 host record and the top-level immutable
   ps2toolchain commit to repository validation data.
+- Added Version 1.0 release notes, public FAQ, repository map, and consistent
+  script usage and argument validation.
+
+### Changed
+
+- Promoted the verified native ARM64 installation workflow to Version 1.0.
+- Added `g++` explicitly to the verified host package requirements.
+- Improved release-facing helper diagnostics without changing successful build
+  behavior.
+
+### Removed
+
+- Removed the invalid Project 006 patch files and their unused application
+  helper. Historical failure evidence remains in the milestone log and
+  documentation.
+- Removed obsolete empty-directory placeholders, including the unused Docker
+  directory placeholder. Version 1.0 provides no Docker image.

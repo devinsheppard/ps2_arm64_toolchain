@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+
+usage() {
+  echo "Usage: ${0##*/}"
+  echo 'Validate the applied Project 007 job-count patches.'
+}
+
+if test "${1:-}" = -h || test "${1:-}" = --help; then
+  usage
+  exit 0
+fi
+if test "$#" -ne 0; then
+  usage >&2
+  exit 2
+fi
+
 set -x
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
@@ -12,6 +27,7 @@ validate_component() {
   local repo="$ROOT/build/ps2toolchain/build/ps2toolchain-$component"
   local config="$repo/config/ps2toolchain-$component-config.sh"
   local actual_scripts
+  local output
 
   test -z "$(git -C "$repo" diff --name-only --diff-filter=ACDMRTUXB -- . ':!config/*' ':!scripts/*')"
   test "$(git -C "$repo" diff --name-only -- 'scripts/*.sh' | wc -l)" -eq "$expected_scripts"

@@ -366,3 +366,39 @@ preparation, environment, resource expectations, build logging, validation,
 swap guidance, and troubleshooting. Support remains verified only on the
 recorded Raspberry Pi/Ubuntu host. Official upstream ARM64 support is still
 undocumented; PS2SDK samples, gsKit, and Tyra remain unvalidated.
+
+## 2026-07-12 — Project 009 Version 1.0 release preparation
+
+All 49 files tracked at the start of Project 009 were reviewed. Historical
+milestone transcripts were retained. Empty directory placeholders, the three
+known-invalid Project 006 patch attempts, and their unused application helper
+were removed after review; the Project 006 failure transcript and documentation
+remain as the permanent record. No build tree, installed binary, or upstream
+worktree was changed.
+
+The script audit found one release-packaging defect before final validation:
+`scripts/project-003-preclone.sh` was tracked with mode `100644`, although
+`scripts/project-008-prepare.sh` invokes it directly. The exact interface-test
+failure was:
+
+```text
+/bin/bash: line 1: scripts/project-003-preclone.sh: Permission denied
+```
+
+The script and the directly usable historical pin-audit script were marked
+executable. Script syntax, help output, and invalid-argument rejection then
+passed. This changed repository file modes only; it did not rebuild or modify
+the toolchain.
+
+The read-only installation verifier was run one final time with the documented
+repository-local environment and `PS2DEV_JOBS=1`. The preserved transcript is
+`logs/project-009-release-verification.log`; it ended with:
+
+```text
+SUMMARY: failures=0 warnings=0
+COMMAND_EXIT_CODE="0"
+```
+
+The installed DVP, IOP, and EE toolchain remained fully verified. Project 009
+performed no rebuild, new architecture research, PS2SDK sample validation,
+gsKit work, or Tyra work.
