@@ -17,3 +17,10 @@ All notable project changes will be recorded here.
 - Recorded the Project 005 stop condition without rerunning the known four-job OOM workload or changing system swap.
 - Added initial repository-maintained DVP, IOP, and EE patches intended to support `PS2DEV_JOBS` while preserving the upstream default.
 - Recorded the Project 006 stop condition: the first DVP patch hunk failed `git apply --check` because its context did not match the pinned source; no patch or build was applied.
+- Added exact-source DVP, IOP, and EE patches under `patches/project-007/` with
+  a validated `PS2DEV_JOBS` override and unchanged upstream default behavior.
+- Added repository-local validation for patch scope, default and one-job
+  behavior, and invalid job-count rejection.
+- Completed the full pinned native ARM64 DVP, IOP, and EE toolchain build with
+  `PS2DEV_JOBS=1`; verified AArch64 executables, versions, paths, and all exact
+  nested source commits.

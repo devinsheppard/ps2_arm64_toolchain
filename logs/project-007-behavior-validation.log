@@ -1,0 +1,299 @@
+Script started on 2026-07-12 09:56:18-05:00 [COMMAND="./scripts/project-007-validate-job-patches.sh" <not executed on terminal>]
++++ dirname ./scripts/project-007-validate-job-patches.sh
+++ cd ./scripts/..
+++ pwd
++ ROOT=/home/devin/ps2_arm64_toolchain
+++ getconf _NPROCESSORS_ONLN
++ DEFAULT_JOBS=4
++ validate_component dvp 3
++ local component=dvp
++ local expected_scripts=3
++ local repo=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp
++ local config=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh
++ local actual_scripts
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp diff --name-only --diff-filter=ACDMRTUXB -- . ':!config/*' ':!scripts/*'
++ test -z ''
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp diff --name-only -- 'scripts/*.sh'
+++ wc -l
++ test 3 -eq 3
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp diff --name-only -- 'config/*.sh'
+++ wc -l
++ test 1 -eq 1
++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp diff --check
+++ grep -R -l -F 'PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/scripts
+++ wc -l
++ actual_scripts=3
++ test 3 -eq 3
+++ grep -R -l -F 'PROC_NR=$(getconf _NPROCESSORS_ONLN)' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/scripts
+++ true
++ test -z ''
++ unset PS2DEV_JOBS
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh
+++ PS2TOOLCHAIN_DVP_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_DVP_BINUTILS_DEFAULT_REPO_REF=dvp-v2.45.1
+++ PS2TOOLCHAIN_DVP_MASP_REPO_URL=https://github.com/ps2dev/masp.git
+++ PS2TOOLCHAIN_DVP_MASP_DEFAULT_REPO_REF=v0.1.16
+++ PS2TOOLCHAIN_DVP_OPENVCL_REPO_URL=https://github.com/ps2dev/openvcl.git
+++ PS2TOOLCHAIN_DVP_OPENVCL_DEFAULT_REPO_REF=v0.4.0
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh
+++ PS2TOOLCHAIN_DVP_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_DVP_BINUTILS_DEFAULT_REPO_REF=dvp-v2.45.1
+++ PS2TOOLCHAIN_DVP_MASP_REPO_URL=https://github.com/ps2dev/masp.git
+++ PS2TOOLCHAIN_DVP_MASP_DEFAULT_REPO_REF=v0.1.16
+++ PS2TOOLCHAIN_DVP_OPENVCL_REPO_URL=https://github.com/ps2dev/openvcl.git
+++ PS2TOOLCHAIN_DVP_OPENVCL_DEFAULT_REPO_REF=v0.4.0
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=1
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh
+++ PS2TOOLCHAIN_DVP_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_DVP_BINUTILS_DEFAULT_REPO_REF=dvp-v2.45.1
+++ PS2TOOLCHAIN_DVP_MASP_REPO_URL=https://github.com/ps2dev/masp.git
+++ PS2TOOLCHAIN_DVP_MASP_DEFAULT_REPO_REF=v0.1.16
+++ PS2TOOLCHAIN_DVP_OPENVCL_REPO_URL=https://github.com/ps2dev/openvcl.git
+++ PS2TOOLCHAIN_DVP_OPENVCL_DEFAULT_REPO_REF=v0.4.0
+++ test -f /does/not/exist
+++ test -n 1
+++ case "$PS2DEV_JOBS" in
+++ case "$PS2DEV_JOBS" in
++ PROC_NR=1
++ test 1 -eq 1
++ local invalid
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=0
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=00
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=abc
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=1x
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=-1
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-dvp/config/ps2toolchain-dvp-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ validate_component iop 2
++ local component=iop
++ local expected_scripts=2
++ local repo=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop
++ local config=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh
++ local actual_scripts
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop diff --name-only --diff-filter=ACDMRTUXB -- . ':!config/*' ':!scripts/*'
++ test -z ''
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop diff --name-only -- 'scripts/*.sh'
+++ wc -l
++ test 2 -eq 2
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop diff --name-only -- 'config/*.sh'
+++ wc -l
++ test 1 -eq 1
++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop diff --check
+++ grep -R -l -F 'PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/scripts
+++ wc -l
++ actual_scripts=2
++ test 2 -eq 2
+++ grep -R -l -F 'PROC_NR=$(getconf _NPROCESSORS_ONLN)' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/scripts
+++ true
++ test -z ''
++ unset PS2DEV_JOBS
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh
+++ PS2TOOLCHAIN_IOP_BINUTILS_REPO_URL=https://sourceware.org/git/binutils-gdb.git
+++ PS2TOOLCHAIN_IOP_BINUTILS_DEFAULT_REPO_REF=binutils-2_45_1
+++ PS2TOOLCHAIN_IOP_GCC_REPO_URL=https://gcc.gnu.org/git/gcc.git
+++ PS2TOOLCHAIN_IOP_GCC_DEFAULT_REPO_REF=releases/gcc-15.2.0
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh
+++ PS2TOOLCHAIN_IOP_BINUTILS_REPO_URL=https://sourceware.org/git/binutils-gdb.git
+++ PS2TOOLCHAIN_IOP_BINUTILS_DEFAULT_REPO_REF=binutils-2_45_1
+++ PS2TOOLCHAIN_IOP_GCC_REPO_URL=https://gcc.gnu.org/git/gcc.git
+++ PS2TOOLCHAIN_IOP_GCC_DEFAULT_REPO_REF=releases/gcc-15.2.0
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=1
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh
+++ PS2TOOLCHAIN_IOP_BINUTILS_REPO_URL=https://sourceware.org/git/binutils-gdb.git
+++ PS2TOOLCHAIN_IOP_BINUTILS_DEFAULT_REPO_REF=binutils-2_45_1
+++ PS2TOOLCHAIN_IOP_GCC_REPO_URL=https://gcc.gnu.org/git/gcc.git
+++ PS2TOOLCHAIN_IOP_GCC_DEFAULT_REPO_REF=releases/gcc-15.2.0
+++ test -f /does/not/exist
+++ test -n 1
+++ case "$PS2DEV_JOBS" in
+++ case "$PS2DEV_JOBS" in
++ PROC_NR=1
++ test 1 -eq 1
++ local invalid
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=0
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=00
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=abc
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=1x
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=-1
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-iop/config/ps2toolchain-iop-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ validate_component ee 6
++ local component=ee
++ local expected_scripts=6
++ local repo=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee
++ local config=/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh
++ local actual_scripts
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee diff --name-only --diff-filter=ACDMRTUXB -- . ':!config/*' ':!scripts/*'
++ test -z ''
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee diff --name-only -- 'scripts/*.sh'
+++ wc -l
++ test 6 -eq 6
+++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee diff --name-only -- 'config/*.sh'
+++ wc -l
++ test 1 -eq 1
++ git -C /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee diff --check
+++ grep -R -l -F 'PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/scripts
+++ wc -l
++ actual_scripts=6
++ test 6 -eq 6
+++ grep -R -l -F 'PROC_NR=$(getconf _NPROCESSORS_ONLN)' /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/scripts
+++ true
++ test -z ''
++ unset PS2DEV_JOBS
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh
+++ PS2TOOLCHAIN_EE_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_EE_BINUTILS_DEFAULT_REPO_REF=ee-v2.45.1
+++ PS2TOOLCHAIN_EE_GCC_REPO_URL=https://github.com/ps2dev/gcc.git
+++ PS2TOOLCHAIN_EE_GCC_DEFAULT_REPO_REF=ee-v15.2.0
+++ PS2TOOLCHAIN_EE_NEWLIB_REPO_URL=https://github.com/ps2dev/newlib.git
+++ PS2TOOLCHAIN_EE_NEWLIB_DEFAULT_REPO_REF=ee-v4.6.0
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_REPO_URL=https://github.com/ps2dev/pthread-embedded.git
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_DEFAULT_REPO_REF=platform_agnostic
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh
+++ PS2TOOLCHAIN_EE_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_EE_BINUTILS_DEFAULT_REPO_REF=ee-v2.45.1
+++ PS2TOOLCHAIN_EE_GCC_REPO_URL=https://github.com/ps2dev/gcc.git
+++ PS2TOOLCHAIN_EE_GCC_DEFAULT_REPO_REF=ee-v15.2.0
+++ PS2TOOLCHAIN_EE_NEWLIB_REPO_URL=https://github.com/ps2dev/newlib.git
+++ PS2TOOLCHAIN_EE_NEWLIB_DEFAULT_REPO_REF=ee-v4.6.0
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_REPO_URL=https://github.com/ps2dev/pthread-embedded.git
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_DEFAULT_REPO_REF=platform_agnostic
+++ test -f /does/not/exist
+++ test -n ''
+++ getconf _NPROCESSORS_ONLN
++ PROC_NR=4
++ test 4 -eq 4
++ PS2DEV_JOBS=1
++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
++ source /home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh
+++ PS2TOOLCHAIN_EE_BINUTILS_REPO_URL=https://github.com/ps2dev/binutils-gdb.git
+++ PS2TOOLCHAIN_EE_BINUTILS_DEFAULT_REPO_REF=ee-v2.45.1
+++ PS2TOOLCHAIN_EE_GCC_REPO_URL=https://github.com/ps2dev/gcc.git
+++ PS2TOOLCHAIN_EE_GCC_DEFAULT_REPO_REF=ee-v15.2.0
+++ PS2TOOLCHAIN_EE_NEWLIB_REPO_URL=https://github.com/ps2dev/newlib.git
+++ PS2TOOLCHAIN_EE_NEWLIB_DEFAULT_REPO_REF=ee-v4.6.0
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_REPO_URL=https://github.com/ps2dev/pthread-embedded.git
+++ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_DEFAULT_REPO_REF=platform_agnostic
+++ test -f /does/not/exist
+++ test -n 1
+++ case "$PS2DEV_JOBS" in
+++ case "$PS2DEV_JOBS" in
++ PROC_NR=1
++ test 1 -eq 1
++ local invalid
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=0
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=00
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=abc
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=1x
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ for invalid in 0 00 abc 1x -1
+++ PS2DEV_JOBS=-1
+++ PS2DEV_CONFIG_OVERRIDE=/does/not/exist
+++ bash -c 'source '\''/home/devin/ps2_arm64_toolchain/build/ps2toolchain/build/ps2toolchain-ee/config/ps2toolchain-ee-config.sh'\'''
++ output='ERROR: PS2DEV_JOBS must be a positive integer.'
++ test 'ERROR: PS2DEV_JOBS must be a positive integer.' = 'ERROR: PS2DEV_JOBS must be a positive integer.'
++ echo 'All Project 007 job-count patch behavior checks passed.'
+All Project 007 job-count patch behavior checks passed.
+
+Script done on 2026-07-12 09:56:18-05:00 [COMMAND_EXIT_CODE="0"]

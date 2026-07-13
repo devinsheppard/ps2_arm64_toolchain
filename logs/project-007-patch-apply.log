@@ -1,0 +1,49 @@
+Script started on 2026-07-12 09:55:55-05:00 [COMMAND="set -eu; for component in dvp iop ee; do repo="build/ps2toolchain/build/ps2toolchain-$component"; patch="patches/project-007/ps2toolchain-$component-ps2dev-jobs.patch"; printf "COMPONENT=%s\n" "$component"; printf "STATUS_BEFORE_BEGIN\n"; git -C "$repo" status --short; printf "STATUS_BEFORE_END\n"; git -C "$repo" apply "/home/devin/ps2_arm64_toolchain/$patch"; printf "STATUS_AFTER_BEGIN\n"; git -C "$repo" status --short; printf "STATUS_AFTER_END\n"; git -C "$repo" diff --check; git -C "$repo" diff --stat; done" <not executed on terminal>]
+COMPONENT=dvp
+STATUS_BEFORE_BEGIN
+STATUS_BEFORE_END
+STATUS_AFTER_BEGIN
+ [31mM[m config/ps2toolchain-dvp-config.sh
+ [31mM[m scripts/001-binutils.sh
+ [31mM[m scripts/002-masp.sh
+ [31mM[m scripts/003-openvcl.sh
+STATUS_AFTER_END
+ config/ps2toolchain-dvp-config.sh | 10 [32m++++++++++[m
+ scripts/001-binutils.sh           |  2 [32m+[m[31m-[m
+ scripts/002-masp.sh               |  2 [32m+[m[31m-[m
+ scripts/003-openvcl.sh            |  2 [32m+[m[31m-[m
+ 4 files changed, 13 insertions(+), 3 deletions(-)
+COMPONENT=iop
+STATUS_BEFORE_BEGIN
+STATUS_BEFORE_END
+STATUS_AFTER_BEGIN
+ [31mM[m config/ps2toolchain-iop-config.sh
+ [31mM[m scripts/001-binutils.sh
+ [31mM[m scripts/002-gcc-stage1.sh
+STATUS_AFTER_END
+ config/ps2toolchain-iop-config.sh | 10 [32m++++++++++[m
+ scripts/001-binutils.sh           |  2 [32m+[m[31m-[m
+ scripts/002-gcc-stage1.sh         |  2 [32m+[m[31m-[m
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+COMPONENT=ee
+STATUS_BEFORE_BEGIN
+STATUS_BEFORE_END
+STATUS_AFTER_BEGIN
+ [31mM[m config/ps2toolchain-ee-config.sh
+ [31mM[m scripts/001-binutils.sh
+ [31mM[m scripts/002-gcc-stage1.sh
+ [31mM[m scripts/003-newlib.sh
+ [31mM[m scripts/004-newlib-nano.sh
+ [31mM[m scripts/005-pthread-embedded.sh
+ [31mM[m scripts/006-gcc-stage2.sh
+STATUS_AFTER_END
+ config/ps2toolchain-ee-config.sh | 10 [32m++++++++++[m
+ scripts/001-binutils.sh          |  2 [32m+[m[31m-[m
+ scripts/002-gcc-stage1.sh        |  2 [32m+[m[31m-[m
+ scripts/003-newlib.sh            |  2 [32m+[m[31m-[m
+ scripts/004-newlib-nano.sh       |  2 [32m+[m[31m-[m
+ scripts/005-pthread-embedded.sh  |  2 [32m+[m[31m-[m
+ scripts/006-gcc-stage2.sh        |  2 [32m+[m[31m-[m
+ 7 files changed, 16 insertions(+), 6 deletions(-)
+
+Script done on 2026-07-12 09:55:55-05:00 [COMMAND_EXIT_CODE="0"]

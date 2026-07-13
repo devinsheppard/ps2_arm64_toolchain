@@ -1,0 +1,44 @@
+diff --git a/config/ps2toolchain-iop-config.sh b/config/ps2toolchain-iop-config.sh
+index 9305d42..3f18baa 100644
+--- a/config/ps2toolchain-iop-config.sh
++++ b/config/ps2toolchain-iop-config.sh
+@@ -8,3 +8,13 @@ PS2TOOLCHAIN_IOP_GCC_DEFAULT_REPO_REF="releases/gcc-15.2.0"
+ if test -f "$PS2DEV_CONFIG_OVERRIDE"; then
+   source "$PS2DEV_CONFIG_OVERRIDE"
+ fi
++
++if test -n "${PS2DEV_JOBS:-}"; then
++  case "$PS2DEV_JOBS" in
++    *[!0-9]*) echo "ERROR: PS2DEV_JOBS must be a positive integer." >&2; exit 1 ;;
++  esac
++  case "$PS2DEV_JOBS" in
++    *[1-9]*) ;;
++    *) echo "ERROR: PS2DEV_JOBS must be a positive integer." >&2; exit 1 ;;
++  esac
++fi
+diff --git a/scripts/001-binutils.sh b/scripts/001-binutils.sh
+index 532e4c9..6da736d 100755
+--- a/scripts/001-binutils.sh
++++ b/scripts/001-binutils.sh
+@@ -52,7 +52,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
+ fi
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## Create and enter the toolchain/build directory
+ rm -rf "build-$TARGET"
+diff --git a/scripts/002-gcc-stage1.sh b/scripts/002-gcc-stage1.sh
+index a799bad..03d4055 100755
+--- a/scripts/002-gcc-stage1.sh
++++ b/scripts/002-gcc-stage1.sh
+@@ -53,7 +53,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
+ fi
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## Create and enter the toolchain/build directory
+ rm -rf "build-$TARGET-stage1"

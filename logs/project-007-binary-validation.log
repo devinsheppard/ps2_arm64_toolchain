@@ -1,0 +1,11 @@
+Script started on 2026-07-12 19:19:13-05:00 [COMMAND="set -eu; ROOT=/home/devin/ps2_arm64_toolchain; PS2DEV="$ROOT/build/ps2dev"; printf "VALIDATION_TIME=%s\n" "$(date --iso-8601=seconds)"; uname -a; for component in dvp iop ee; do repo="$ROOT/build/ps2toolchain/build/ps2toolchain-$component"; printf "COMPONENT_COMMIT %s %s\n" "$component" "$(git -C "$repo" rev-parse HEAD)"; done; for spec in "dvp/bin/dvp-as" "dvp/bin/dvp-ld" "iop/bin/mipsel-none-elf-as" "iop/bin/mipsel-none-elf-gcc" "iop/bin/mipsel-none-elf-g++" "ee/bin/mips64r5900el-ps2-elf-as" "ee/bin/mips64r5900el-ps2-elf-gcc" "ee/bin/mips64r5900el-ps2-elf-g++"; do binary="$PS2DEV/$spec"; test -x "$binary"; resolved=$(realpath "$binary"); case "$resolved" in "$ROOT"/build/*) ;; *) echo "ERROR: binary outside build: $resolved" >&2; exit 1;; esac; printf "BINARY=%s\n" "$resolved"; file "$binary"; "$binary" --version | head -1; done; printf "TOP_LEVEL_BINARIES_BEGIN\n"; find "$PS2DEV/bin" -maxdepth 1 -type f -perm -111 -print | sort; printf "TOP_LEVEL_BINARIES_END\n"; printf "NESTED_COMMITS_BEGIN\n"; for repo in "$ROOT"/build/ps2toolchain/build/ps2toolchain-{dvp,iop,ee}/build/*; do test -d "$repo/.git" || continue; printf "%s %s\n" "${repo#$ROOT/}" "$(git -C "$repo" rev-parse HEAD)"; done | sort; printf "NESTED_COMMITS_END\n"; echo "PROJECT_007_BINARY_VALIDATION=PASS"" <not executed on terminal>]
+VALIDATION_TIME=2026-07-12T19:19:13-05:00
+Linux devin 7.0.0-1009-raspi #9-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 16:37:04 UTC 2026 aarch64 GNU/Linux
+COMPONENT_COMMIT dvp 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
+COMPONENT_COMMIT iop 8129f3ab5f6beb63e0ec1ed3627ef9b985750729
+COMPONENT_COMMIT ee 480a5f31c644107ceddcdadf6ee5502fb2cd14ff
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6cb563e3aff85e4d8d95eb0eb400142463099608, for GNU/Linux 3.7.0, not stripped
+GNU assembler (GNU Binutils) 2.45.1
+
+Script done on 2026-07-12 19:19:14-05:00 [COMMAND_EXIT_CODE="1"]

@@ -207,3 +207,94 @@ This expression preserves the upstream `getconf` command when `PS2DEV_JOBS` is u
 - **Recommended Project 007 objective:** Regenerate the minimal DVP, IOP, and EE patches directly against their exact pinned file contents, validate every patch with `git apply --check`, then verify unset and `PS2DEV_JOBS=1` job selection before resuming the resource-controlled build.
 
 The complete failed application transcript is preserved in `logs/project-006-patch-apply.log`.
+
+## 2026-07-12 — Project 007 pinned job-count patches and successful native build
+
+### Exact pinned source inspection
+
+The clean component worktrees were verified at DVP
+`54d25004c9d9d0d10d5f320703a8fe7c6ddb684a`, IOP
+`8129f3ab5f6beb63e0ec1ed3627ef9b985750729`, and EE
+`480a5f31c644107ceddcdadf6ee5502fb2cd14ff`. Eleven scripts independently
+assigned `PROC_NR=$(getconf _NPROCESSORS_ONLN)` and passed it to existing
+`make -j "$PROC_NR"` or `cmake --build ... -j "$PROC_NR"` commands:
+
+- DVP: `scripts/001-binutils.sh` (assignment line 54, target loop line 57),
+  `002-masp.sh` (line 34), and `003-openvcl.sh` (line 34).
+- IOP: `scripts/001-binutils.sh` (line 55) and `002-gcc-stage1.sh` (line 56).
+- EE: `scripts/001-binutils.sh` (line 53, target loop line 56),
+  `002-gcc-stage1.sh` (line 55, loop line 58), `003-newlib.sh` (line 41,
+  loop line 44), `004-newlib-nano.sh` (line 51, loop line 54),
+  `005-pthread-embedded.sh` (line 40, loop line 43), and
+  `006-gcc-stage2.sh` (line 58, loop line 61).
+
+There was no literal `-j 4`; four jobs were derived from `getconf`. Every
+parallel build command used `PROC_NR`. Upstream files were not modified during
+inspection or patch generation.
+
+### Patch design and validation
+
+Three patches under `patches/project-007/` were generated from disposable
+worktrees at the exact commits above. Each validates `PS2DEV_JOBS` after the
+component configuration override, then changes only existing assignments to:
+
+```text
+PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+```
+
+Unset and empty values therefore preserve the exact upstream `getconf`
+behavior. Positive integers override it; non-numeric or all-zero values fail
+with a clear error. Compiler flags, optimization, source, component order, and
+paths are unchanged.
+
+Ordered `git apply --check` validation passed for DVP, IOP, and EE against
+clean pinned checkouts. After application to disposable worktrees,
+`scripts/project-007-validate-job-patches.sh` verified intended diff scope,
+all 11 assignments, the host default of four, `PS2DEV_JOBS=1`, and rejection
+of `0`, `00`, `abc`, `1x`, and `-1`. Complete transcripts are preserved in
+`logs/project-007-patch-check.log`, `logs/project-007-patch-apply.log`, and
+`logs/project-007-behavior-validation.log`.
+
+### Successful resource-controlled build
+
+The official pinned DVP, IOP, and EE component workflows ran sequentially with
+`PS2DEV_JOBS=1`, the existing immutable override, and repository-local
+`PS2DEV`/`PS2SDK` paths. The complete transcript is
+`logs/project-007-build.log`. It ended with all three
+`COMPONENT_BUILD_COMPLETE` markers and exit status 0.
+
+- **Elapsed time:** 9:21:11.
+- **Maximum resident set:** 2,096,896 KiB (about 2.0 GiB).
+- **OOM:** None. The timed command reported zero swaps and no process was
+  killed; the Project 004 four-job failure did not recur.
+- **ARM64 result:** No ARM64-specific failure appeared. DVP, IOP, and EE all
+  configured and compiled natively from an `aarch64-unknown-linux-gnu` host.
+- **Install scope:** All configured prefixes and verified executable realpaths
+  are below `/home/devin/ps2_arm64_toolchain/build/`.
+
+The build retained upstream warnings. Notable nonfatal output included missing
+optional binutils/GDB features, GCC format-security warnings, machine-description
+warnings, `libatomic/configure` command-not-found messages that did not stop its
+successful archive/install, and cleanup-time missing `xgcc` messages after GCC
+had already been removed by the clean sequence. The official workflow still
+returned 0.
+
+### Binary and commit verification
+
+The final successful verification is preserved in
+`logs/project-007-binary-validation-final.log`. Representative DVP, IOP, and
+EE executables exist, run on AArch64, and report:
+
+- MASP 0.1.16 and OpenVCL 0.4.0;
+- DVP GNU assembler/binutils 2.45.1;
+- IOP GNU binutils 2.45.1 and GCC/G++ 15.2.0;
+- EE GNU binutils 2.45.1 and GCC/G++ 15.2.0.
+
+All nine nested source checkouts matched the immutable commit manifest. An
+earlier validation transcript, `logs/project-007-binary-validation.log`, is
+also retained: it exited 1 because the validation command incorrectly assumed
+a DVP `dvp-ld` executable, while the pinned DVP configuration intentionally
+does not build `ld`. This did not rerun or invalidate the successful build.
+
+Project 007 is complete. PS2SDK sample validation, gsKit, and Tyra were not
+started.

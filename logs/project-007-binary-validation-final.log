@@ -1,0 +1,181 @@
+Script started on 2026-07-12 19:19:46-05:00 [COMMAND="set -eu; ROOT=/home/devin/ps2_arm64_toolchain; PS2DEV="$ROOT/build/ps2dev"; printf "VALIDATION_TIME=%s\n" "$(date --iso-8601=seconds)"; uname -a; for component in dvp iop ee; do repo="$ROOT/build/ps2toolchain/build/ps2toolchain-$component"; printf "COMPONENT_COMMIT %s %s\n" "$component" "$(git -C "$repo" rev-parse HEAD)"; done; for spec in "bin/masp" "bin/openvcl" "dvp/bin/dvp-as" "dvp/bin/dvp-ar" "iop/bin/mipsel-none-elf-as" "iop/bin/mipsel-none-elf-ld" "iop/bin/mipsel-none-elf-gcc" "iop/bin/mipsel-none-elf-g++" "ee/bin/mips64r5900el-ps2-elf-as" "ee/bin/mips64r5900el-ps2-elf-ld" "ee/bin/mips64r5900el-ps2-elf-gcc" "ee/bin/mips64r5900el-ps2-elf-g++"; do binary="$PS2DEV/$spec"; test -x "$binary"; resolved=$(realpath "$binary"); case "$resolved" in "$ROOT"/build/*) ;; *) echo "ERROR: binary outside build: $resolved" >&2; exit 1;; esac; printf "BINARY=%s\n" "$resolved"; file "$binary"; "$binary" --version; done; printf "ALL_EXECUTABLES_BEGIN\n"; find "$PS2DEV/bin" "$PS2DEV/dvp/bin" "$PS2DEV/iop/bin" "$PS2DEV/ee/bin" -maxdepth 1 -type f -perm -111 -print | sort; printf "ALL_EXECUTABLES_END\n"; printf "NESTED_COMMITS_BEGIN\n"; for repo in "$ROOT"/build/ps2toolchain/build/ps2toolchain-{dvp,iop,ee}/build/*; do test -e "$repo/.git" || continue; printf "%s %s\n" "${repo#$ROOT/}" "$(git -C "$repo" rev-parse HEAD)"; done | sort; printf "NESTED_COMMITS_END\n"; echo "PROJECT_007_BINARY_VALIDATION=PASS"" <not executed on terminal>]
+VALIDATION_TIME=2026-07-12T19:19:46-05:00
+Linux devin 7.0.0-1009-raspi #9-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 16:37:04 UTC 2026 aarch64 GNU/Linux
+COMPONENT_COMMIT dvp 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
+COMPONENT_COMMIT iop 8129f3ab5f6beb63e0ec1ed3627ef9b985750729
+COMPONENT_COMMIT ee 480a5f31c644107ceddcdadf6ee5502fb2cd14ff
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/masp
+/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/masp: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7696b6fa44be9c0d99e5d4427c5c058a3b8915ae, for GNU/Linux 3.7.0, not stripped
+MASP, the Assembly Preprocessor 0.1.16
+Copyright 2003 Johann Gunnar Oskarsson <myrkraverk@users.sourcefore.net>
+
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/openvcl
+/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/openvcl: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=d1e53500d418e78978c55259e4449999b0d9c2a4, for GNU/Linux 3.7.0, not stripped
+OpenVCL Version 0.4.0
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6cb563e3aff85e4d8d95eb0eb400142463099608, for GNU/Linux 3.7.0, not stripped
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `dvp'.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-ar: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=de5ca2e5ccd3bc2c1dd70f21b155543ad045a690, for GNU/Linux 3.7.0, not stripped
+GNU ar (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) any later version.
+This program has absolutely no warranty.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-as: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=3161edf457ad614c74ed1683708180d09b7ee7d3, for GNU/Linux 3.7.0, stripped
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `mipsel-none-elf'.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ld
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ld: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c0c86edafc9eaf87aae9d8bb266a4b5deb3c8abc, for GNU/Linux 3.7.0, stripped
+GNU ld (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc: ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=67bc34f8ff9eee7c13cadc4343ea50c30c8296af, for GNU/Linux 3.7.0, stripped
+mipsel-none-elf-gcc (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-g++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-g++: ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=a2838f4c6c88240ef88c27483772654dc05abecd, for GNU/Linux 3.7.0, stripped
+mipsel-none-elf-g++ (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-as: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f28013129cc0df48a8c08e7b48405814a0e2fc38, for GNU/Linux 3.7.0, stripped
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `mips64r5900el-ps2-elf'.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ld
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ld: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=63042f31c22260b3dc8700ed10686801e7da0836, for GNU/Linux 3.7.0, stripped
+GNU ld (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc: ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c3fd28d1a335a7d809a223f678d74368fa07b1bf, for GNU/Linux 3.7.0, stripped
+mips64r5900el-ps2-elf-gcc (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+BINARY=/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-g++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-g++: ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7026096697bb6592fee6c7d58b853ec2b07ee98f, for GNU/Linux 3.7.0, stripped
+mips64r5900el-ps2-elf-g++ (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+ALL_EXECUTABLES_BEGIN
+/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/masp
+/home/devin/ps2_arm64_toolchain/build/ps2dev/bin/openvcl
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-addr2line
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-c++filt
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-elfedit
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-nm
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-objcopy
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-objdump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-ranlib
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-readelf
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-size
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-strings
+/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-strip
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-addr2line
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-c++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-c++filt
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-cpp
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-elfedit
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-g++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc-15.2.0
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc-nm
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc-ranlib
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcov
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcov-dump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcov-tool
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gdb
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gdb-add-index
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gprof
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gstack
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ld
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ld.bfd
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-lto-dump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-nm
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-objcopy
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-objdump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ranlib
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-readelf
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-size
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-strings
+/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-strip
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-addr2line
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-as
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-c++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-c++filt
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-cpp
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-elfedit
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-g++
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc-15.2.0
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc-ar
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc-nm
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc-ranlib
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcov
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcov-dump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcov-tool
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gdb
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gdb-add-index
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gstack
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ld
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ld.bfd
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-lto-dump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-nm
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-objcopy
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-objdump
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ranlib
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-readelf
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-size
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-strings
+/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-strip
+ALL_EXECUTABLES_END
+NESTED_COMMITS_BEGIN
+build/ps2toolchain/build/ps2toolchain-dvp/build/binutils-gdb 3eb45ea37f0efd498d1de3cf9562de07197aefa8
+build/ps2toolchain/build/ps2toolchain-dvp/build/masp ddb4fa5fb1546e74662979a4e417217c27201c3f
+build/ps2toolchain/build/ps2toolchain-dvp/build/openvcl 5d432985669f9ed2ecde7058a8d2faeb0396b2d4
+build/ps2toolchain/build/ps2toolchain-ee/build/binutils-gdb 616e51fa6ed9d1e8f4bda7d0087fac30c5398aa9
+build/ps2toolchain/build/ps2toolchain-ee/build/gcc df77d03bc1bd5765b40de554918a5ff541202548
+build/ps2toolchain/build/ps2toolchain-ee/build/newlib 58fb6406408a541e0c826f47487315b485d4db56
+build/ps2toolchain/build/ps2toolchain-ee/build/pthread-embedded b1746fd2b52d5aeafc1173761eb50e0958e8994b
+build/ps2toolchain/build/ps2toolchain-iop/build/binutils-gdb 48324fde1e284293dd3d570dba597cb644921c92
+build/ps2toolchain/build/ps2toolchain-iop/build/gcc 5115c7e447fc07457443df874bf57840e8316d5f
+NESTED_COMMITS_END
+PROJECT_007_BINARY_VALIDATION=PASS
+
+Script done on 2026-07-12 19:19:47-05:00 [COMMAND_EXIT_CODE="0"]

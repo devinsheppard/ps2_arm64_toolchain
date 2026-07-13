@@ -1,0 +1,96 @@
+diff --git a/config/ps2toolchain-ee-config.sh b/config/ps2toolchain-ee-config.sh
+index 96e3c43..2695ca0 100644
+--- a/config/ps2toolchain-ee-config.sh
++++ b/config/ps2toolchain-ee-config.sh
+@@ -12,3 +12,13 @@ PS2TOOLCHAIN_EE_PTHREAD_EMBEDDED_DEFAULT_REPO_REF="platform_agnostic"
+ if test -f "$PS2DEV_CONFIG_OVERRIDE"; then
+   source "$PS2DEV_CONFIG_OVERRIDE"
+ fi
++
++if test -n "${PS2DEV_JOBS:-}"; then
++  case "$PS2DEV_JOBS" in
++    *[!0-9]*) echo "ERROR: PS2DEV_JOBS must be a positive integer." >&2; exit 1 ;;
++  esac
++  case "$PS2DEV_JOBS" in
++    *[1-9]*) ;;
++    *) echo "ERROR: PS2DEV_JOBS must be a positive integer." >&2; exit 1 ;;
++  esac
++fi
+diff --git a/scripts/001-binutils.sh b/scripts/001-binutils.sh
+index f678b29..ffb60d3 100755
+--- a/scripts/001-binutils.sh
++++ b/scripts/001-binutils.sh
+@@ -50,7 +50,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
+ fi
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do
+diff --git a/scripts/002-gcc-stage1.sh b/scripts/002-gcc-stage1.sh
+index 57007c2..b1556d0 100755
+--- a/scripts/002-gcc-stage1.sh
++++ b/scripts/002-gcc-stage1.sh
+@@ -52,7 +52,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
+ fi
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do
+diff --git a/scripts/003-newlib.sh b/scripts/003-newlib.sh
+index f36a5df..7b417a4 100755
+--- a/scripts/003-newlib.sh
++++ b/scripts/003-newlib.sh
+@@ -38,7 +38,7 @@ TARGET_CFLAGS="-O2 -gdwarf-2 -gz"
+ OSVER=$(uname)
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do
+diff --git a/scripts/004-newlib-nano.sh b/scripts/004-newlib-nano.sh
+index 214dfa5..a742006 100755
+--- a/scripts/004-newlib-nano.sh
++++ b/scripts/004-newlib-nano.sh
+@@ -48,7 +48,7 @@ rm -rf "$PS2DEV_TMP"
+ mkdir "$PS2DEV_TMP"
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do
+diff --git a/scripts/005-pthread-embedded.sh b/scripts/005-pthread-embedded.sh
+index 353fe8a..2ff9e79 100755
+--- a/scripts/005-pthread-embedded.sh
++++ b/scripts/005-pthread-embedded.sh
+@@ -37,7 +37,7 @@ TARG_XTRA_OPTS=""
+ OSVER=$(uname)
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do
+diff --git a/scripts/006-gcc-stage2.sh b/scripts/006-gcc-stage2.sh
+index 9d55bce..9ae529e 100755
+--- a/scripts/006-gcc-stage2.sh
++++ b/scripts/006-gcc-stage2.sh
+@@ -55,7 +55,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
+ fi
+ 
+ ## Determine the maximum number of processes that Make can work with.
+-PROC_NR=$(getconf _NPROCESSORS_ONLN)
++PROC_NR=${PS2DEV_JOBS:-$(getconf _NPROCESSORS_ONLN)}
+ 
+ ## For each target...
+ for TARGET in "mips64r5900el-ps2-elf"; do

@@ -1,0 +1,2 @@
+logs/*.log -text whitespace=-trailing-space
+patches/**/*.patch -text whitespace=-trailing-space

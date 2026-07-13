@@ -1,0 +1,23 @@
+Script started on 2026-07-12 09:55:41-05:00 [COMMAND="set -eu; uname -a; getconf _NPROCESSORS_ONLN; for component in dvp iop ee; do repo="build/ps2toolchain/build/ps2toolchain-$component"; patch="patches/project-007/ps2toolchain-$component-ps2dev-jobs.patch"; printf "COMPONENT=%s\n" "$component"; printf "PINNED_COMMIT=%s\n" "$(git -C "$repo" rev-parse HEAD)"; printf "UPSTREAM_STATUS_BEGIN\n"; git -C "$repo" status --short; printf "UPSTREAM_STATUS_END\n"; printf "COMMAND=git -C %s apply --check %s\n" "$repo" "$patch"; git -C "$repo" apply --check "/home/devin/ps2_arm64_toolchain/$patch"; printf "PATCH_CHECK=PASS\n"; done" <not executed on terminal>]
+Linux devin 7.0.0-1009-raspi #9-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 16:37:04 UTC 2026 aarch64 GNU/Linux
+4
+COMPONENT=dvp
+PINNED_COMMIT=54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
+UPSTREAM_STATUS_BEGIN
+UPSTREAM_STATUS_END
+COMMAND=git -C build/ps2toolchain/build/ps2toolchain-dvp apply --check patches/project-007/ps2toolchain-dvp-ps2dev-jobs.patch
+PATCH_CHECK=PASS
+COMPONENT=iop
+PINNED_COMMIT=8129f3ab5f6beb63e0ec1ed3627ef9b985750729
+UPSTREAM_STATUS_BEGIN
+UPSTREAM_STATUS_END
+COMMAND=git -C build/ps2toolchain/build/ps2toolchain-iop apply --check patches/project-007/ps2toolchain-iop-ps2dev-jobs.patch
+PATCH_CHECK=PASS
+COMPONENT=ee
+PINNED_COMMIT=480a5f31c644107ceddcdadf6ee5502fb2cd14ff
+UPSTREAM_STATUS_BEGIN
+UPSTREAM_STATUS_END
+COMMAND=git -C build/ps2toolchain/build/ps2toolchain-ee apply --check patches/project-007/ps2toolchain-ee-ps2dev-jobs.patch
+PATCH_CHECK=PASS
+
+Script done on 2026-07-12 09:55:41-05:00 [COMMAND_EXIT_CODE="0"]
