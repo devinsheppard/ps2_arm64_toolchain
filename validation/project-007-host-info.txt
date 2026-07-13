@@ -1,0 +1,32 @@
+Project 007 verified host environment
+
+Hardware:
+Raspberry Pi 4 Model B Rev 1.2
+
+Architecture:
+aarch64 / ARM64
+
+Memory:
+3.7 GiB usable RAM
+
+Swap:
+1.0 GiB configured
+
+Swap state at build start:
+957 MiB used, 66 MiB free
+
+Operating system and kernel:
+Ubuntu 26.04 LTS (Resolute Raccoon)
+Linux devin 7.0.0-1009-raspi #9-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 16:37:04 UTC 2026 aarch64 GNU/Linux
+
+Project 007 result:
+Full native ARM64 PS2 toolchain build completed successfully with PS2DEV_JOBS=1.
+
+Build time:
+9:21:11
+
+Peak RSS:
+2,096,896 KiB
+
+Notes:
+The build completed without OOM and without any confirmed ARM64-specific failure.

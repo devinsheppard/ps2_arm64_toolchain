@@ -24,3 +24,14 @@ All notable project changes will be recorded here.
 - Completed the full pinned native ARM64 DVP, IOP, and EE toolchain build with
   `PS2DEV_JOBS=1`; verified AArch64 executables, versions, paths, and all exact
   nested source commits.
+- Added a complete native ARM64 installation, resource-planning,
+  troubleshooting, and verification guide based on the successful Project 007
+  measurements.
+- Added clean-workspace preparation and build wrappers that reproduce the exact
+  pinned repository layout, explicit job-count patches, and successful DVP →
+  IOP → EE build order.
+- Added a read-only installation verifier and a 76-entry executable manifest;
+  final verification passed all package, environment, resource, commit, patch,
+  path, executable-format, and version checks without rebuilding.
+- Added the approved Project 007 host record and the top-level immutable
+  ps2toolchain commit to repository validation data.

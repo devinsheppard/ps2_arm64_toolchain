@@ -298,3 +298,71 @@ does not build `ld`. This did not rerun or invalidate the successful build.
 
 Project 007 is complete. PS2SDK sample validation, gsKit, and Tyra were not
 started.
+
+## 2026-07-12 — Project 008 reproducible installation audit
+
+### Verified installation inputs
+
+Project 008 audited the successful Project 007 installation without rebuilding
+or modifying compiler source. The approved host record in
+`validation/project-007-host-info.txt` was compared with the preserved build
+transcript and the live host:
+
+- Raspberry Pi 4 Model B Rev 1.2, ARM64/AArch64;
+- Ubuntu 26.04 LTS (Resolute Raccoon);
+- Linux `7.0.0-1009-raspi`;
+- 3.7 GiB usable RAM and 1.0 GiB configured swap;
+- Project 007 duration 9:21:11 and maximum RSS 2,096,896 KiB;
+- successful complete DVP, IOP, and EE build with `PS2DEV_JOBS=1` and no OOM.
+
+The required Ubuntu package audit covered `gcc`, `make`, `patch`, `git`,
+`wget`, `texinfo`, `flex`, `bison`, `libgsl-dev`, `libgmp-dev`, `libmpfr-dev`,
+`libmpc-dev`, `gettext`, `cmake`, `file`, and `time`. All were installed on the
+verified host; `bsdutils` supplies the transcript-capturing `script` command.
+The cleaned on-disk footprint was approximately 6.3 GiB below
+`build/ps2toolchain` and 436 MiB below `build/ps2dev`; Project 008 recommends at
+least 10 GiB free before starting.
+
+### Reproducible workflow
+
+The immutable manifest now explicitly includes the top-level ps2toolchain
+commit `6d63befdde76fd695435d16f246a3bde72a8c096` in addition to the three
+component and nine nested repository pins. `scripts/project-008-prepare.sh`
+creates all required repository levels, validates commit object types and exact
+detached `HEAD` values, applies only the documented Project 007 patches, and
+runs their behavior checks. This closes the previous assumption that component
+repositories already existed.
+
+`scripts/project-008-build.sh` preserves the successful Project 007 behavior:
+repository-local `PS2DEV`/`PS2SDK`, the immutable configuration override,
+positive `PS2DEV_JOBS`, and official DVP → IOP → EE component scripts. It does
+not alter compiler source, flags, optimization, order, or paths. Both new
+workflow scripts passed Bash syntax validation. They were not used to rebuild
+the already successful installation in Project 008.
+
+### Finished-installation verification
+
+`scripts/project-008-verify-installation.sh` is read-only. It checks host
+resources, all required packages and environment values, free disk, every
+repository commit, exact patch application, all 76 entries in
+`validation/project-008-expected-executables.txt`, repository-local realpaths,
+native AArch64 ELF format or portable shell-helper format, and representative
+version execution.
+
+The initial transcript, `logs/project-008-verification-initial.log`, exited 1
+because the first verifier revision incorrectly required four expected GDB
+helper scripts (`gdb-add-index` and `gstack` for IOP and EE) to be AArch64 ELF
+files. All actual compiled tools passed. The verifier was corrected to accept
+executable, host-independent shell helpers; no toolchain file was changed.
+
+The final transcript, `logs/project-008-verification.log`, ended with
+`SUMMARY: failures=0 warnings=0`. It verified Binutils 2.45.1, GCC/G++ 15.2.0,
+MASP 0.1.16, and OpenVCL 0.4.0. No rebuild was necessary.
+
+### Remaining scope
+
+The main installation guide now documents package installation, exact source
+preparation, environment, resource expectations, build logging, validation,
+swap guidance, and troubleshooting. Support remains verified only on the
+recorded Raspberry Pi/Ubuntu host. Official upstream ARM64 support is still
+undocumented; PS2SDK samples, gsKit, and Tyra remain unvalidated.

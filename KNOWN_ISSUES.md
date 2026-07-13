@@ -108,3 +108,39 @@ No issue above is a confirmed build failure because Project 001 performed no bui
   final binary validation passed.
 - **ARM64 relevance:** None established. There was no host-architecture
   diagnostic or failure.
+
+## KI-011 — Reproducibility is verified on one ARM64 platform only
+
+- **Status:** Open limitation
+- **Verified platform:** Raspberry Pi 4 Model B Rev 1.2, Ubuntu 26.04 LTS,
+  Linux `7.0.0-1009-raspi`, 3.7 GiB usable RAM, and 1.0 GiB swap.
+- **Evidence:** Project 007 completed in 9:21:11 with peak RSS of 2,096,896 KiB
+  and no OOM using `PS2DEV_JOBS=1`; Project 008's finished-installation
+  verification passed with zero failures and warnings.
+- **Impact:** Other ARM64 hardware, kernels, Ubuntu releases, and resource
+  profiles have not completed this exact procedure and must not be presented
+  as verified.
+
+## KI-012 — Project 008 clean-system wrappers have not performed a second build
+
+- **Status:** Open validation limitation
+- **Affected:** `scripts/project-008-prepare.sh` and
+  `scripts/project-008-build.sh`
+- **Evidence:** Both scripts passed Bash syntax and repository consistency
+  review. Their exact pins, explicit patches, environment, and component order
+  reproduce the successful Project 007 commands. Project 008 intentionally did
+  not rerun the nine-hour build.
+- **Impact:** The existing installation passed complete read-only validation,
+  but a second clean-host end-to-end execution of the new convenience wrappers
+  has not yet been recorded.
+- **ARM64 relevance:** None; this is a validation-coverage limitation.
+
+## KI-013 — Initial Project 008 verifier rejected portable GDB helper scripts
+
+- **Status:** Resolved in Project 008
+- **Evidence:** The first run treated IOP/EE `gdb-add-index` and `gstack` as
+  failures because they are executable shell scripts instead of AArch64 ELF
+  binaries. See `logs/project-008-verification-initial.log`.
+- **Resolution:** The verifier now accepts either native AArch64 ELF tools or
+  executable host-independent shell helpers. The final verification reported
+  zero failures and warnings; no installed toolchain file changed.

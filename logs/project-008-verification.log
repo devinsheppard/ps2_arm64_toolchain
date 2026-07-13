@@ -1,0 +1,213 @@
+Script started on 2026-07-12 19:50:20-05:00 [COMMAND="env PS2DEV=/home/devin/ps2_arm64_toolchain/build/ps2dev PS2SDK=/home/devin/ps2_arm64_toolchain/build/ps2dev/ps2sdk PS2DEV_CONFIG_OVERRIDE=/home/devin/ps2_arm64_toolchain/validation/project-002-pins.sh PS2DEV_JOBS=1 PATH=/home/devin/ps2_arm64_toolchain/build/ps2dev/bin:/home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin:/home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin:/home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin:$PATH ./scripts/project-008-verify-installation.sh" <not executed on terminal>]
+== Host ==
+PASS: ARM64 architecture (arm64)
+OS: Ubuntu 26.04 LTS
+Linux devin 7.0.0-1009-raspi #9-Ubuntu SMP PREEMPT_DYNAMIC Mon Apr 13 16:37:04 UTC 2026 aarch64 GNU/Linux
+Memory: 3869648 KiB
+Swap: 1048572 KiB
+Disk available: 36844252 KiB
+PASS: at least 3.5 million KiB RAM
+PASS: at least approximately 1 GiB configured swap
+PASS: at least 10 GiB free disk space
+== Ubuntu packages ==
+PASS: gcc 4:15.2.0-5ubuntu1
+PASS: make 4.4.1-3
+PASS: patch 2.8-2build1
+PASS: git 1:2.53.0-1ubuntu1
+PASS: wget 1.25.0-2ubuntu4
+PASS: texinfo 7.2-5ubuntu2
+PASS: flex 2.6.4-8.2build2
+PASS: bison 2:3.8.2+dfsg-1build4
+PASS: libgsl-dev 2.8+dfsg-6
+PASS: libgmp-dev 2:6.3.0+dfsg-5ubuntu2
+PASS: libmpfr-dev 4.2.2-3
+PASS: libmpc-dev 1.3.1-3
+PASS: gettext 0.23.2-1
+PASS: cmake 4.2.3-2ubuntu2
+PASS: file 1:5.46-5build2
+PASS: time 1.9-0.4
+PASS: bsdutils 1:2.41.3-3ubuntu2
+== Environment ==
+PASS: PS2DEV = /home/devin/ps2_arm64_toolchain/build/ps2dev
+PASS: PS2SDK = /home/devin/ps2_arm64_toolchain/build/ps2dev/ps2sdk
+PASS: PS2DEV_CONFIG_OVERRIDE = /home/devin/ps2_arm64_toolchain/validation/project-002-pins.sh
+PASS: PS2DEV_JOBS=1
+PASS: PATH contains /home/devin/ps2_arm64_toolchain/build/ps2dev/bin
+PASS: PATH contains /home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin
+PASS: PATH contains /home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin
+PASS: PATH contains /home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin
+== Repository inputs ==
+PASS: validation/project-002-pins.sh
+PASS: validation/project-008-expected-executables.txt
+PASS: patches/project-007/ps2toolchain-dvp-ps2dev-jobs.patch
+PASS: patches/project-007/ps2toolchain-iop-ps2dev-jobs.patch
+PASS: patches/project-007/ps2toolchain-ee-ps2dev-jobs.patch
+PASS: scripts/project-003-preclone.sh
+PASS: scripts/project-007-validate-job-patches.sh
+PASS: scripts/project-008-prepare.sh
+PASS: scripts/project-008-build.sh
+PASS: logs/project-007-build.log
+PASS: logs/project-007-binary-validation-final.log
+PASS: ps2toolchain commit = 6d63befdde76fd695435d16f246a3bde72a8c096
+PASS: ps2toolchain-dvp commit = 54d25004c9d9d0d10d5f320703a8fe7c6ddb684a
+PASS: ps2toolchain-iop commit = 8129f3ab5f6beb63e0ec1ed3627ef9b985750729
+PASS: ps2toolchain-ee commit = 480a5f31c644107ceddcdadf6ee5502fb2cd14ff
+PASS: dvp-binutils commit = 3eb45ea37f0efd498d1de3cf9562de07197aefa8
+PASS: dvp-masp commit = ddb4fa5fb1546e74662979a4e417217c27201c3f
+PASS: dvp-openvcl commit = 5d432985669f9ed2ecde7058a8d2faeb0396b2d4
+PASS: iop-binutils commit = 48324fde1e284293dd3d570dba597cb644921c92
+PASS: iop-gcc commit = 5115c7e447fc07457443df874bf57840e8316d5f
+PASS: ee-binutils commit = 616e51fa6ed9d1e8f4bda7d0087fac30c5398aa9
+PASS: ee-gcc commit = df77d03bc1bd5765b40de554918a5ff541202548
+PASS: ee-newlib commit = 58fb6406408a541e0c826f47487315b485d4db56
+PASS: ee-pthread commit = b1746fd2b52d5aeafc1173761eb50e0958e8994b
+PASS: dvp PS2DEV_JOBS patch is applied
+PASS: iop PS2DEV_JOBS patch is applied
+PASS: ee PS2DEV_JOBS patch is applied
+== Installed executables ==
+PASS: installed executable inventory exactly matches the 76-entry manifest
+PASS: bin/masp (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7696b6fa44be9c0d99e5d4427c5c058a3b8915ae, for GNU/Linux 3.7.0, not stripped)
+PASS: bin/openvcl (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=d1e53500d418e78978c55259e4449999b0d9c2a4, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-addr2line (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=1eed6c0efc5541ffde59e6b442724596360ee46d, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-ar (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=de5ca2e5ccd3bc2c1dd70f21b155543ad045a690, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-as (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6cb563e3aff85e4d8d95eb0eb400142463099608, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-c++filt (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=be173533815bbe88f5f8723e3c6d1a8fa52afc0f, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-elfedit (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=150073297cfff31eb0aad3fd45d57f28c6eadf43, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-nm (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=52f28e43e3544bdd458982d618045b6f01536d47, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-objcopy (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=b69c85e0e8928e70b87e728392077f12f2342b15, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-objdump (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=b3b20e0e336597096f236c75c92b3e114cc56380, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-ranlib (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=8a21abceeda809e0245c60b0b90fa31c40c36d01, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-readelf (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=ce02da98321e469ef3cf9d32c8018bad2692f92d, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-size (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c48369e754fd8bd86aa8f85ff7b0b5632c61c0fd, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-strings (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=780760b5b531d63541544c6c9bca40a0ee82516d, for GNU/Linux 3.7.0, not stripped)
+PASS: dvp/bin/dvp-strip (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6f0d84101839c6c45beaf04836b4e6e81922efd8, for GNU/Linux 3.7.0, not stripped)
+PASS: iop/bin/mipsel-none-elf-addr2line (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=4b78b1627ae91fdd28f095af2c5b7b39e404b331, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-ar (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=10f735f9bdd90217d55d632024595879cace5c58, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-as (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=3161edf457ad614c74ed1683708180d09b7ee7d3, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-c++ (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=a2838f4c6c88240ef88c27483772654dc05abecd, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-c++filt (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=1add39c31028e5f69550fae83757f1b59ba0188d, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-cpp (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f37a8cc4c6e0176512bb08da15afa2f3ef5527b0, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-elfedit (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=0be90273bc9694473435dc135b78b1f996ee9cbd, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-g++ (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=a2838f4c6c88240ef88c27483772654dc05abecd, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcc (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=67bc34f8ff9eee7c13cadc4343ea50c30c8296af, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcc-15.2.0 (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=67bc34f8ff9eee7c13cadc4343ea50c30c8296af, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcc-ar (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=5ff09be0e6a9a7bf807ab20a143774902e18fca9, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcc-nm (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=4735cf726260af1ac76938fcf53e287dbc6c401d, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcc-ranlib (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7c8f0688b1beafd0b3db4c685b29e32ef070699f, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcov (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=78da34fc1afde16f4528453be5c02a87c889efe4, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcov-dump (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6ec5285291dab39ef3a311376b7b9a82477592a1, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gcov-tool (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=022d08634d3622491b85ed25975e3c018091be64, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gdb (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=0fe9610d98393cd8d8a365ef5535d43aa27643d1, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-gdb-add-index (host-independent POSIX shell script, ASCII text executable)
+PASS: iop/bin/mipsel-none-elf-gstack (host-independent Bourne-Again shell script, ASCII text executable)
+PASS: iop/bin/mipsel-none-elf-ld (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c0c86edafc9eaf87aae9d8bb266a4b5deb3c8abc, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-ld.bfd (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c0c86edafc9eaf87aae9d8bb266a4b5deb3c8abc, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-lto-dump (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=95c7a95c08a18d7057c1ba6414070c74ba9afd37, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-nm (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c4394b317103b282d0fdc37d8bef78999931aea5, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-objcopy (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=84ff965fa0c0a37c4f606d42124b6ac84829c055, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-objdump (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=9013ad9011233d3ac3aa1ddb1aa1c6aa1210a72b, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-ranlib (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=18c6b8dff5111348417232d845581675ca2d40ad, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-readelf (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=e849a6bb5a847e47ca6680a7bf02d8c14aff74d5, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-size (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=890e9abf94530614d6135088eaec56521f1c6662, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-strings (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=ea1cb49e0bce10f9f289973b3efc2d80198c4944, for GNU/Linux 3.7.0, stripped)
+PASS: iop/bin/mipsel-none-elf-strip (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=d555570532a062bc93cb5166f6359f44853960db, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-addr2line (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f337ddbaaa0fb31a8df444045d77011f2ca1b31b, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-ar (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=934f4da7ce31331674edcae407746b5bcc19b998, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-as (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f28013129cc0df48a8c08e7b48405814a0e2fc38, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-c++ (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7026096697bb6592fee6c7d58b853ec2b07ee98f, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-c++filt (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c7cb554af6ca16d6cfbc39f3453f6abf14d36979, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-cpp (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=54b12266eaea936acc09add18a7e6e791a8dc6e0, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-elfedit (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=b3c9e3aa8ff3bce3668a05aeac10d3985b462556, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-g++ (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=7026096697bb6592fee6c7d58b853ec2b07ee98f, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcc (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c3fd28d1a335a7d809a223f678d74368fa07b1bf, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcc-15.2.0 (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c3fd28d1a335a7d809a223f678d74368fa07b1bf, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcc-ar (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=bf6cbb5b93f3bfb0b1109e90d5e009e9052eb5db, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcc-nm (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=478d77883b9ffddc69a455c184c0acbef61abf6f, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcc-ranlib (ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=8c6bcee83fbe0ff9279c8c7d28ab744c5ef858b4, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcov (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=a7d01b02ae951f249aebeb011dcb58325de5fbee, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcov-dump (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=1e49dc010ac0364717a219a57e97b7622ef15dd6, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gcov-tool (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=a615b9c248a47fb4428ffa7afa8571aa8eda7163, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gdb (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=330643b1f75f76d4bc4221c5bd222c375830a77d, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gdb-add-index (host-independent POSIX shell script, ASCII text executable)
+PASS: ee/bin/mips64r5900el-ps2-elf-gprof (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=b38747461f33a13af9095d547d5d5a0409c84dcb, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-gstack (host-independent Bourne-Again shell script, ASCII text executable)
+PASS: ee/bin/mips64r5900el-ps2-elf-ld (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=63042f31c22260b3dc8700ed10686801e7da0836, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-ld.bfd (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=63042f31c22260b3dc8700ed10686801e7da0836, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-lto-dump (ELF 64-bit LSB executable, ARM aarch64, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=428d83e9d73fe58a51257b159e4b834be9e5d3a8, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-nm (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=3c5562329042193a361678269a10c7099902ca15, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-objcopy (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=9cbecd37c453570185d250b9570d13c41b48d9fd, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-objdump (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=efb80b00adc33e93df2cea9454fdd8a6410ab660, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-ranlib (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=6ef63a544bf01df8795c2b5488353c8927cf2b93, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-readelf (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f4fe508b5872022152bb9f2757eb509b13657646, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-size (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=3145695a8c4edec6161b4e19ab1a5016607d685f, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-strings (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=5c5ead94f52c5bdf41d2f854c83af3498cf8f0d9, for GNU/Linux 3.7.0, stripped)
+PASS: ee/bin/mips64r5900el-ps2-elf-strip (ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, BuildID[sha1]=c023501b698723cb35e12f70c1f702368aab1e86, for GNU/Linux 3.7.0, stripped)
+== Version execution ==
+MASP, the Assembly Preprocessor 0.1.16
+Copyright 2003 Johann Gunnar Oskarsson <myrkraverk@users.sourcefore.net>
+
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License.  This program has absolutely no warranty.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/bin/masp --version
+OpenVCL Version 0.4.0
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/bin/openvcl --version
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `dvp'.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/dvp/bin/dvp-as --version
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `mipsel-none-elf'.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-as --version
+GNU ld (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-ld --version
+mipsel-none-elf-gcc (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-gcc --version
+mipsel-none-elf-g++ (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/iop/bin/mipsel-none-elf-g++ --version
+GNU assembler (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or later.
+This program has absolutely no warranty.
+This assembler was configured for a target of `mips64r5900el-ps2-elf'.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-as --version
+GNU ld (GNU Binutils) 2.45.1
+Copyright (C) 2025 Free Software Foundation, Inc.
+This program is free software; you may redistribute it under the terms of
+the GNU General Public License version 3 or (at your option) a later version.
+This program has absolutely no warranty.
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-ld --version
+mips64r5900el-ps2-elf-gcc (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc --version
+mips64r5900el-ps2-elf-g++ (GCC) 15.2.0
+Copyright (C) 2025 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+PASS: /home/devin/ps2_arm64_toolchain/build/ps2dev/ee/bin/mips64r5900el-ps2-elf-g++ --version
+SUMMARY: failures=0 warnings=0
+
+Script done on 2026-07-12 19:50:24-05:00 [COMMAND_EXIT_CODE="0"]
