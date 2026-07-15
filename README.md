@@ -256,3 +256,11 @@ order.
 See [BUILD_LOG.md](BUILD_LOG.md), [KNOWN_ISSUES.md](KNOWN_ISSUES.md), the
 [upstream source inventory](docs/upstream-sources.md), and the preserved
 Project 007 logs for complete evidence.
+
+## License
+
+Original content in this repository is licensed under the MIT License. The
+[LICENSE](LICENSE) file contains the applicable license text. Third-party and
+upstream software retains its original licensing. See
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and
+[docs/upstream-sources.md](docs/upstream-sources.md) for additional details.
